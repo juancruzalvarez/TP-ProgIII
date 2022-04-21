@@ -10,7 +10,7 @@ import systema.usuarios.TipoUsuario;
 
 import java.time.LocalDate;
 
-/* COMENTARIO AGREGADOef */
+/*Prueba*/
 
 public class Main {
 
@@ -90,6 +90,5 @@ public class Main {
         }catch(ContraseniaIncorrectaException e){
             System.out.println("Error al iniciar session: El nombre de usuario y la constrasenia no coinciden");
         }
-        pruaa
     }
 }
