@@ -7,8 +7,8 @@ public class TicketEmpleador extends Ticket{
     private int cantEmpleadosBuscados;
     private int cantEmpleadosConseguidos;
 
-    public TicketEmpleador(LocalDate fechaDeAlta, Formulario formulario, int cantEmpleadosBuscados){
-        super(fechaDeAlta, formulario);
+    public TicketEmpleador(Formulario formulario, int cantEmpleadosBuscados,String nombreDeUsuario){
+        super(formulario,nombreDeUsuario);
         this.cantEmpleadosBuscados = cantEmpleadosBuscados;
         this.cantEmpleadosConseguidos = 0;
     }

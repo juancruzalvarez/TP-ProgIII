@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 public class TicketEmpleadoPretenso extends Ticket {
     private boolean exito;
-    public TicketEmpleadoPretenso(LocalDate fechaDeAlta, Formulario formulario){
-        super(fechaDeAlta, formulario);
+    public TicketEmpleadoPretenso(Formulario formulario,String nombreDeUsuario){
+        super(formulario,nombreDeUsuario);
         exito = false;
     }
 

@@ -10,7 +10,7 @@ public class EmpleadoPretenso extends Usuario{
     private String apellido;
     private String nroDeTelefono;
     private LocalDate fechaDeNacimiento; // mejor que usar edad.
-    private TicketEmpleadoPretenso ticket;
+   // private TicketEmpleadoPretenso ticket;
 
     public EmpleadoPretenso(String nombreDeUsuario, String constrasenia){
         super(nombreDeUsuario, constrasenia);

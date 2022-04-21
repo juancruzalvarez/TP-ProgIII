@@ -1,9 +1,13 @@
 package systema.usuarios;
 
+import systema.tickets.Ticket;
+
 public abstract class Usuario {
     protected String nombreDeUsuario;
     protected String constrasenia;
     protected int puntaje;
+   
+    
 
     public Usuario(String nombreDeUsuario, String constrasenia){
         this.nombreDeUsuario = nombreDeUsuario;
@@ -28,4 +32,5 @@ public abstract class Usuario {
     public void setPuntaje(int puntaje){
         this.puntaje = puntaje;
     }
+
 }

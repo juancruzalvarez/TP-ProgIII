@@ -9,7 +9,7 @@ public class Empleador extends Usuario{
     private String nombre; // o razon social
     private TipoEmpleador tipo; //persona fisica o juridica
     private RubroEmpleador rubro; //salud, comercio local o comercio internacional
-    private List<TicketEmpleador> tickets;
+   // private List<TicketEmpleador> tickets;
 
     public Empleador(String nombreDeUsuario, String constrasenia){
         super(nombreDeUsuario, constrasenia);

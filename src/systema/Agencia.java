@@ -1,25 +1,56 @@
 package systema;
 
-import exepciones.*;
-import systema.usuarios.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
+
+import exepciones.ContraseniaIncorrectaException;
+import exepciones.NombreDeUsuarioEnUsoException;
+import exepciones.UsuarioInexistenteException;
+import systema.tickets.Formulario;
+import systema.tickets.Ticket;
+import systema.tickets.TicketEmpleadoPretenso;
+import systema.tickets.TicketEmpleador;
+import systema.usuarios.EmpleadoPretenso;
+import systema.usuarios.Empleador;
+import systema.usuarios.RubroEmpleador;
+import systema.usuarios.TipoEmpleador;
+import systema.usuarios.TipoUsuario;
+import systema.usuarios.Usuario;
+import systema.usuarios.UsuarioFactory;
 
 public class Agencia {
     private static Agencia _instancia;
     private Usuario usuario_activo;
     private Map<String, Empleador> empleadores;
     private Map<String, EmpleadoPretenso> empleadosPretensos;
+    private Formulario formulario;
+    private ArrayList<TicketEmpleador> ticketsEmpleadores;
+    private ArrayList<TicketEmpleadoPretenso> ticketsEmpleados;
 
     private Agencia(){
         usuario_activo = null;
         empleadores = new HashMap<>();
         empleadosPretensos = new HashMap<>();
+        ticketsEmpleadores=new ArrayList<TicketEmpleador>();
+        ticketsEmpleados=new ArrayList<TicketEmpleadoPretenso>();
+    }
+    
+    public void CompletarFormulario(String locacion, String remuneracion, String cargaHoraria, String puestoLaboral, String rangoEtario,String expPrevia, String estudios) {
+    	//validar datos del formulario?
+    	formulario=new Formulario(locacion,remuneracion,cargaHoraria,puestoLaboral,rangoEtario,expPrevia,estudios);
+    	}
+    public void CrearTicket() {
+    	Ticket ticket=new TicketEmpleadoPretenso(formulario,usuario_activo.getNombreDeUsuario());
+    	formulario=null; //limpiar formulario una vez cargado?
+    	ticketsEmpleados.add((TicketEmpleadoPretenso) ticket);
+    }
+    public void CrearTicket(int cantEmpleadosBuscados) {
+    	Ticket ticket=new TicketEmpleador(formulario,cantEmpleadosBuscados,usuario_activo.getNombreDeUsuario());
+    	formulario=null; //limpiar formulario una vez cargado?
+    	ticketsEmpleadores.add((TicketEmpleador) ticket);
+    	
     }
 
     /**
