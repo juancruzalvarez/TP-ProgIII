@@ -1,32 +1,19 @@
 package systema.usuarios;
 
+import systema.tickets.TicketEmpleador;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Empleador extends Usuario{
     private String nombre; // o razon social
     private TipoEmpleador tipo; //persona fisica o juridica
     private RubroEmpleador rubro; //salud, comercio local o comercio internacional
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setTipo(TipoEmpleador tipo) {
-        this.tipo = tipo;
-    }
-
-    public RubroEmpleador getRubro() {
-        return rubro;
-    }
-
-    public void setRubro(RubroEmpleador rubro) {
-        this.rubro = rubro;
-    }
+    private List<TicketEmpleador> tickets;
 
     public Empleador(String nombreDeUsuario, String constrasenia){
         super(nombreDeUsuario, constrasenia);
+        tickets = new ArrayList<>();
     }
 
     /**
@@ -59,5 +46,32 @@ public class Empleador extends Usuario{
     @Override
     public TipoUsuario getTipo() {
         return TipoUsuario.EMPLEADOR;
+    }
+
+    public void AgregarTicket(TicketEmpleador ticket){
+        tickets.add(ticket);
+    }
+    public List<TicketEmpleador> getTickets(){
+        return tickets;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setTipo(TipoEmpleador tipo) {
+        this.tipo = tipo;
+    }
+
+    public RubroEmpleador getRubro() {
+        return rubro;
+    }
+
+    public void setRubro(RubroEmpleador rubro) {
+        this.rubro = rubro;
     }
 }
