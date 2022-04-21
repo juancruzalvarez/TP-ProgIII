@@ -10,7 +10,7 @@ import systema.usuarios.TipoUsuario;
 
 import java.time.LocalDate;
 
-/* COMENTARIO AGREGADO */
+/* COMENTARIO AGREGADOef */
 
 public class Main {
 
