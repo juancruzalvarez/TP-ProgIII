@@ -1,5 +1,7 @@
 package systema.usuarios;
 
+import systema.tickets.TicketEmpleadoPretenso;
+
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -8,6 +10,7 @@ public class EmpleadoPretenso extends Usuario{
     private String apellido;
     private String nroDeTelefono;
     private LocalDate fechaDeNacimiento; // mejor que usar edad.
+    private TicketEmpleadoPretenso ticket;
 
     public EmpleadoPretenso(String nombreDeUsuario, String constrasenia){
         super(nombreDeUsuario, constrasenia);
@@ -33,6 +36,14 @@ public class EmpleadoPretenso extends Usuario{
         if(fechaDeNacimiento != null){
             setFechaDeNacimiento(fechaDeNacimiento);
         }
+    }
+
+    public TicketEmpleadoPretenso getTicket(){
+        return ticket;
+    }
+
+    public void setTicket(TicketEmpleadoPretenso ticket){
+        this.ticket = ticket;
     }
 
     public String getNombre() {
