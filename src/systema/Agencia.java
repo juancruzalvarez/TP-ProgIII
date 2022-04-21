@@ -5,19 +5,21 @@ import systema.usuarios.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class Agencia {
     private static Agencia _instancia;
     private Usuario usuario_activo;
-    private List<Empleador> empleadores;
-    private List<EmpleadoPretenso> empleadosPretensos;
+    private Map<String, Empleador> empleadores;
+    private Map<String, EmpleadoPretenso> empleadosPretensos;
 
     private Agencia(){
         usuario_activo = null;
-        empleadores = new ArrayList<>();
-        empleadosPretensos = new ArrayList<>();
+        empleadores = new HashMap<>();
+        empleadosPretensos = new HashMap<>();
     }
 
     /**
@@ -37,10 +39,12 @@ public class Agencia {
      * @param constrasenia
      */
     public void login(String nombreDeUsuario, String constrasenia) throws UsuarioInexistenteException, ContraseniaIncorrectaException {
-        Usuario usr = Stream.concat(empleadores.stream(), empleadosPretensos.stream())
-                .filter( e -> (e.getNombreDeUsuario().equals(nombreDeUsuario)))
-                .findAny()
-                .orElse(null);
+        Usuario usr = null;
+        if(empleadores.containsKey(nombreDeUsuario)){
+            usr = empleadores.get(nombreDeUsuario);
+        }else if(empleadosPretensos.containsKey(nombreDeUsuario)){
+            usr = empleadosPretensos.get(nombreDeUsuario);
+        }
 
         if(usr == null){
             throw new UsuarioInexistenteException("No existe ningun usuario con ese nombre de usuario.", nombreDeUsuario);
@@ -87,21 +91,21 @@ public class Agencia {
      * @param contraseña
      */
     public void registrarUsuario(TipoUsuario tipo, String nombreDeUsuario, String contraseña) throws NombreDeUsuarioEnUsoException {
-        if(Stream.concat(empleadores.stream(), empleadosPretensos.stream()).anyMatch(e -> e.getNombreDeUsuario().equals(nombreDeUsuario))){
+        if(empleadores.containsKey(nombreDeUsuario) || empleadosPretensos.containsKey(nombreDeUsuario)){
             throw new NombreDeUsuarioEnUsoException("Nombre de usuario en uso", nombreDeUsuario);
         }
 
         Usuario usuarioNuevo = UsuarioFactory.getUsuario(tipo, nombreDeUsuario, contraseña);
-        List lista = null;
+        Map map = null;
         switch(tipo) {
             case EMPLEADOR -> {
-                lista = empleadores;
+                map = empleadores;
             }
             case EMPLEADO_PRETENSO -> {
-                lista = empleadosPretensos;
+                map = empleadosPretensos;
             }
         }
-        lista.add(usuarioNuevo);
+        map.put(nombreDeUsuario, usuarioNuevo);
 
     }
 
@@ -110,19 +114,19 @@ public class Agencia {
      * @param tipo
      */
     public void mostrarUsuarios(TipoUsuario tipo){
-        List lista = null;
+        Map map = null;
         System.out.println("----------------------------------------------");
         switch (tipo){
             case EMPLEADO_PRETENSO -> {
                 System.out.println("Empleados Pretensos:");
-                lista = empleadosPretensos;
+                map = empleadosPretensos;
             }
             case EMPLEADOR -> {
                 System.out.println("Empleadores:");
-                lista = empleadores;
+                map = empleadores;
             }
         }
-        lista.forEach(e-> System.out.println(e.toString()));
+        map.forEach((key, value)-> System.out.println(value.toString()));
         System.out.println("----------------------------------------------");
     }
 
