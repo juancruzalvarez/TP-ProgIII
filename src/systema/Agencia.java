@@ -3,11 +3,14 @@ package systema;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import exepciones.ContraseniaIncorrectaException;
 import exepciones.NombreDeUsuarioEnUsoException;
 import exepciones.UsuarioInexistenteException;
+import systema.asignaciones.Asignaciones;
 import systema.tickets.Formulario;
 import systema.tickets.Ticket;
 import systema.tickets.TicketEmpleadoPretenso;
@@ -25,44 +28,51 @@ public class Agencia {
     private Usuario usuario_activo;
     private Map<String, Empleador> empleadores;
     private Map<String, EmpleadoPretenso> empleadosPretensos;
-    private Formulario formulario;
-    private ArrayList<TicketEmpleador> ticketsEmpleadores;
-    private ArrayList<TicketEmpleadoPretenso> ticketsEmpleados;
+
 
     private Agencia(){
         usuario_activo = null;
         empleadores = new HashMap<>();
         empleadosPretensos = new HashMap<>();
-        ticketsEmpleadores=new ArrayList<TicketEmpleador>();
-        ticketsEmpleados=new ArrayList<TicketEmpleadoPretenso>();
-    }
-    
-    public void CompletarFormulario(String locacion, String remuneracion, String cargaHoraria, String puestoLaboral, String rangoEtario,String expPrevia, String estudios) {
-    	//validar datos del formulario?
-    	formulario=new Formulario(locacion,remuneracion,cargaHoraria,puestoLaboral,rangoEtario,expPrevia,estudios);
-    	}
-    public void CrearTicket() {
-    	Ticket ticket=new TicketEmpleadoPretenso(formulario,usuario_activo.getNombreDeUsuario());
-    	formulario=null; //limpiar formulario una vez cargado?
-    	ticketsEmpleados.add((TicketEmpleadoPretenso) ticket);
-    }
-    public void CrearTicket(int cantEmpleadosBuscados) {
-    	Ticket ticket=new TicketEmpleador(formulario,cantEmpleadosBuscados,usuario_activo.getNombreDeUsuario());
-    	formulario=null; //limpiar formulario una vez cargado?
-    	ticketsEmpleadores.add((TicketEmpleador) ticket);
-    	
-    }
 
-    /**
-     * Devuelve la instancia unica de la clase systema.Agencia.
-     * Si la instancia no existe, crea una.
-     * @return
-     */
+    }
     public static Agencia getInstancia(){
         if(_instancia == null)
             _instancia = new Agencia();
         return _instancia;
     }
+
+    public void crearTicket(Formulario formulario) {
+        Asignaciones.getInstancia().crearTicket(usuario_activo.getNombreDeUsuario(), formulario);
+    }
+
+    public void crearTicket(Formulario formulario, int cantEmpleadosBuscados) {
+        Asignaciones.getInstancia().crearTicket(usuario_activo.getNombreDeUsuario(), formulario, cantEmpleadosBuscados);
+    }
+
+    //deberia ser getTickets, no deberia mostrar nada esta clase ???
+    public void mostrarTickets(String nombreDeUsuario) throws UsuarioInexistenteException{
+        if( !(empleadosPretensos.containsKey(nombreDeUsuario) || empleadores.containsKey(nombreDeUsuario)) ){
+            throw new UsuarioInexistenteException("No existe el usuario", nombreDeUsuario);
+        }
+        List<Ticket> tickets = Asignaciones.getInstancia().getTickets(nombreDeUsuario);
+        if(tickets.size() == 0){
+            System.out.println("El usuario no tiene tickets.");
+        }else{
+            tickets.forEach( ticket -> {
+                System.out.println("Ticket:");
+                System.out.println(ticket.toString());
+            });
+        }
+    }
+
+    public List<Ticket> getTickets(String nombreDeUsuario) throws UsuarioInexistenteException{
+        if( !(empleadosPretensos.containsKey(nombreDeUsuario) || empleadores.containsKey(nombreDeUsuario)) ){
+            throw new UsuarioInexistenteException("No existe el usuario", nombreDeUsuario);
+        }
+        return Asignaciones.getInstancia().getTickets(nombreDeUsuario);
+    }
+
 
     /**
      *  Inicia session en el sistema, verificando que exista el usuario y que coincidan las contraseñas.
@@ -122,22 +132,11 @@ public class Agencia {
      * @param contraseña
      */
     public void registrarUsuario(TipoUsuario tipo, String nombreDeUsuario, String contraseña) throws NombreDeUsuarioEnUsoException {
-        if(empleadores.containsKey(nombreDeUsuario) || empleadosPretensos.containsKey(nombreDeUsuario)){
+        if(empleadores.containsKey(nombreDeUsuario) || empleadosPretensos.containsKey(nombreDeUsuario)) {
             throw new NombreDeUsuarioEnUsoException("Nombre de usuario en uso", nombreDeUsuario);
         }
-
         Usuario usuarioNuevo = UsuarioFactory.getUsuario(tipo, nombreDeUsuario, contraseña);
-        Map map = null;
-        switch(tipo) {
-            case EMPLEADOR -> {
-                map = empleadores;
-            }
-            case EMPLEADO_PRETENSO -> {
-                map = empleadosPretensos;
-            }
-        }
-        map.put(nombreDeUsuario, usuarioNuevo);
-
+        ((Map<String, Usuario>)(tipo == TipoUsuario.EMPLEADOR ? empleadores : empleadosPretensos)).put(nombreDeUsuario, usuarioNuevo);
     }
 
     /**
@@ -146,18 +145,7 @@ public class Agencia {
      */
     public void mostrarUsuarios(TipoUsuario tipo){
         Map map = null;
-        System.out.println("----------------------------------------------");
-        switch (tipo){
-            case EMPLEADO_PRETENSO -> {
-                System.out.println("Empleados Pretensos:");
-                map = empleadosPretensos;
-            }
-            case EMPLEADOR -> {
-                System.out.println("Empleadores:");
-                map = empleadores;
-            }
-        }
-        map.forEach((key, value)-> System.out.println(value.toString()));
+        ((Map<String, Usuario>)(tipo == TipoUsuario.EMPLEADOR ? empleadores : empleadosPretensos)).forEach( (key, value) -> System.out.println(value.toString()));
         System.out.println("----------------------------------------------");
     }
 

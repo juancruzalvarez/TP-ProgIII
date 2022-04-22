@@ -8,11 +8,11 @@ public abstract class Ticket {
     private EstadoTicket estado;
     private Formulario formulario;
 
-    public Ticket(Formulario formulario,String nombreDeUsuario){
-        this.fechaDeAlta =LocalDate.now();
+    public Ticket(String nombreDeUsuario, Formulario formulario){
+        this.fechaDeAlta = LocalDate.now();
+        this.nombreDeUsuario = nombreDeUsuario;
         this.formulario = formulario;
         this.estado = EstadoTicket.ACTIVO;  //al crear el ticket arranca en activo.
-        this.nombreDeUsuario=nombreDeUsuario;
     }
 
     // fecha de alta no cambia en la vida del ticket. No se define setter.

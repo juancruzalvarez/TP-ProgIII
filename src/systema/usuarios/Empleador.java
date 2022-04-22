@@ -9,11 +9,9 @@ public class Empleador extends Usuario{
     private String nombre; // o razon social
     private TipoEmpleador tipo; //persona fisica o juridica
     private RubroEmpleador rubro; //salud, comercio local o comercio internacional
-   // private List<TicketEmpleador> tickets;
 
     public Empleador(String nombreDeUsuario, String constrasenia){
         super(nombreDeUsuario, constrasenia);
-        tickets = new ArrayList<>();
     }
 
     /**
@@ -48,12 +46,6 @@ public class Empleador extends Usuario{
         return TipoUsuario.EMPLEADOR;
     }
 
-    public void AgregarTicket(TicketEmpleador ticket){
-        tickets.add(ticket);
-    }
-    public List<TicketEmpleador> getTickets(){
-        return tickets;
-    }
 
     public String getNombre() {
         return nombre;
