@@ -1,17 +1,18 @@
 package prueba;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import exepciones.ContraseniaIncorrectaException;
 import exepciones.NombreDeUsuarioEnUsoException;
 import exepciones.UsuarioInexistenteException;
-import exepciones.ContraseniaIncorrectaException;
 import systema.Agencia;
 import systema.asignaciones.Asignaciones;
 import systema.tickets.Formulario;
+import systema.tickets.FormularioEmpleador;
 import systema.usuarios.RubroEmpleador;
 import systema.usuarios.TipoEmpleador;
 import systema.usuarios.TipoUsuario;
-
-import java.time.LocalDate;
-import java.util.List;
 
 /*Prueba*/
 
@@ -22,24 +23,24 @@ public class Main {
         pCargarDatosUsuario("marcos123", "contrasenia", "Marcos", "Alvarez", "+54 2233060784", LocalDate.of(2000, 8, 2));
         pCrearTicket("marcos123",
                 "contrasenia",
-                new Formulario("home", "v1av3", "parcial", "manager", "mayora200", "mucha", "secundarios")
+                new Formulario("Home Office", "entre V1 y V2", "extendida", "managment", "40 a 50", "nada", "secundario")
         );
         pRegistrarUsuario(TipoUsuario.EMPLEADOR, "empleador2", "contrasef");
         pCargarDatosUsuario("empleador2", "contraseni", "MC DONALS", TipoEmpleador.PERSONA_JURIDICA, RubroEmpleador.COMERCIO_INTERNACIONAL);    //no deberia cargarlos contrase√±a equivocada.
         pCargarDatosUsuario("empleador2", "contrasef", "MC DONALS", TipoEmpleador.PERSONA_JURIDICA, RubroEmpleador.COMERCIO_INTERNACIONAL);
         pCrearTicket("empleador2",
                 "contrasef",
-                new Formulario("homeOffice", "v1av2", "fullTime", "junior", "menor40", "No", "pocos"),
+                new FormularioEmpleador("Home Office",3, "entre V1 y V2",3, "extendida",3, "junior",3, "40 a 50",3, "nada",3, "secundario",3),
                 5);
         pRegistrarUsuario(TipoUsuario.EMPLEADOR, "empleador5", "g");
         pCargarDatosUsuario("empleador5", "g", "Google", TipoEmpleador.PERSONA_JURIDICA, RubroEmpleador.SALUD);
         pCrearTicket("empleador5",
                 "g",
-                new Formulario("homeOffice", "v1av2", "fullTime", "junior", "menor40", "No", "pocos"),
+                new FormularioEmpleador("Home Office",1, "entre V1 y V2",1, "extendida",1, "junior",1, "menos de 40",1, "nada",1, "secundario",1),
                 5);
         pCrearTicket("empleador5",
                 "g",
-                new Formulario("homeOffice", "mayorav2", "fullTime", "senior", "menor40", "No", "muchos"),
+                new FormularioEmpleador("Home Office",4, "m·s de V2",4, "extendida",4, "senior",4, "menos de 40",4, "nada",4, "terciario",4),
                 2);
 
         pRegistrarUsuario(TipoUsuario.EMPLEADO_PRETENSO, "marcos123", "otra"); // No deberia registrarlo
@@ -49,14 +50,14 @@ public class Main {
         pCargarDatosUsuario("juan", "juan2357", "Juan", "Perez", "+54 2233320744", LocalDate.of(1984, 2, 9));
         pCrearTicket("juan",
                 "juan2357",
-                new Formulario("prcsencial", "v1av2", "fullTime", "senior", "mayora100", "inexistente", "zero")
+                new Formulario("Presencial", "entre V1 y V2", "extendida", "senior", "menos de 40", "media", "terciario")
         );
 
         pRegistrarUsuario(TipoUsuario.EMPLEADO_PRETENSO, "pedro", "contra");
         pCargarDatosUsuario("pedro", "contra", "Pedro", "Martinez", "+54 2236840789", LocalDate.of(1998, 11, 27));
         pCrearTicket("pedro",
                 "contra",
-                new Formulario("prcsencial", "v1av2", "fullTime", "senior", "mayora100", "inexistente", "zero")
+                new Formulario("Presencial", "entre V1 y V2", "extendida", "senior", "menos de 40", "media", "terciario")
         );
 
 

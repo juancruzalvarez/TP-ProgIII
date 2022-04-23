@@ -131,11 +131,11 @@ public class Agencia {
      * @param nombreDeUsuario
      * @param contraseña
      */
-    public void registrarUsuario(TipoUsuario tipo, String nombreDeUsuario, String contraseña) throws NombreDeUsuarioEnUsoException {
+    public void registrarUsuario(TipoUsuario tipo, String nombreDeUsuario, String contrasenia) throws NombreDeUsuarioEnUsoException {
         if(empleadores.containsKey(nombreDeUsuario) || empleadosPretensos.containsKey(nombreDeUsuario)) {
             throw new NombreDeUsuarioEnUsoException("Nombre de usuario en uso", nombreDeUsuario);
         }
-        Usuario usuarioNuevo = UsuarioFactory.getUsuario(tipo, nombreDeUsuario, contraseña);
+        Usuario usuarioNuevo = UsuarioFactory.getUsuario(tipo, nombreDeUsuario, contrasenia);
         ((Map<String, Usuario>)(tipo == TipoUsuario.EMPLEADOR ? empleadores : empleadosPretensos)).put(nombreDeUsuario, usuarioNuevo);
     }
 
