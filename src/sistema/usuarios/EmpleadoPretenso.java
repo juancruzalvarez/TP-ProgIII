@@ -1,6 +1,4 @@
-package systema.usuarios;
-
-import systema.tickets.TicketEmpleadoPretenso;
+package sistema.usuarios;
 
 import java.time.LocalDate;
 import java.time.Period;

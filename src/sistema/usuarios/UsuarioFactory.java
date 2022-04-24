@@ -1,4 +1,4 @@
-package systema.usuarios;
+package sistema.usuarios;
 
 public class UsuarioFactory {
     public static Usuario getUsuario(TipoUsuario tipo, String usuario, String constrenia){

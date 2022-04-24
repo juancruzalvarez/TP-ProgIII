@@ -1,33 +1,25 @@
-package systema.asignaciones;
-
-import systema.tickets.Formulario;
-import systema.tickets.Ticket;
-import systema.tickets.TicketEmpleadoPretenso;
-import systema.tickets.TicketEmpleador;
+package sistema.asignaciones;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+import sistema.tickets.Formulario;
+import sistema.tickets.Ticket;
+import sistema.tickets.TicketEmpleadoPretenso;
+import sistema.tickets.TicketEmpleador;
+
 public class Asignaciones {
 
-    private static Asignaciones _instancia;
     private ArrayList<TicketEmpleador> ticketsEmpleadores;
     private ArrayList<TicketEmpleadoPretenso> ticketsEmpleados;
 
     private RondaAsignaciones rondaAsignaciones;
 
-    private Asignaciones(){
+    public Asignaciones(){
         ticketsEmpleadores = new ArrayList<TicketEmpleador>();
         ticketsEmpleados = new ArrayList<TicketEmpleadoPretenso>();
         rondaAsignaciones = null;
-    }
-
-    public static Asignaciones getInstancia(){
-        if(_instancia == null)
-            _instancia = new Asignaciones();
-
-        return _instancia;
     }
 
     public void crearTicket(String nombreDeUsuario, Formulario formulario){
@@ -47,7 +39,7 @@ public class Asignaciones {
     }
 
     //pensar si excepcion o return null. Creo que excepcion
-    public List<UsuarioPuntaje> getListaDeAsignaciones(Ticket ticket){
+    public List<TicketPuntaje> getListaDeAsignaciones(Ticket ticket){
         if(rondaAsignaciones == null){
             //error
             return null;

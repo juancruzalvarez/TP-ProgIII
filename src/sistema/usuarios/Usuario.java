@@ -1,6 +1,4 @@
-package systema.usuarios;
-
-import systema.tickets.Ticket;
+package sistema.usuarios;
 
 public abstract class Usuario {
     protected String nombreDeUsuario;

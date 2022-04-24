@@ -1,6 +1,4 @@
-package systema.tickets;
-
-import java.time.LocalDate;
+package sistema.tickets;
 
 public class TicketEmpleador extends Ticket{
 

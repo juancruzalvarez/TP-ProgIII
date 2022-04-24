@@ -1,4 +1,4 @@
-package systema.usuarios;
+package sistema.usuarios;
 
 public enum TipoEmpleador {
     PERSONA_FISICA,

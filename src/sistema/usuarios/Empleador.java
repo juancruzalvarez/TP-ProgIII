@@ -1,9 +1,4 @@
-package systema.usuarios;
-
-import systema.tickets.TicketEmpleador;
-
-import java.util.ArrayList;
-import java.util.List;
+package sistema.usuarios;
 
 public class Empleador extends Usuario{
     private String nombre; // o razon social

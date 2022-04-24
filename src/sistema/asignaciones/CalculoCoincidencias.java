@@ -1,10 +1,10 @@
-package systema.asignaciones;
+package sistema.asignaciones;
 
 import sistemaPuntaje.Iopcion;
-import systema.tickets.Formulario;
-import systema.tickets.FormularioEmpleador;
-import systema.tickets.TicketEmpleadoPretenso;
-import systema.tickets.TicketEmpleador;
+import sistema.tickets.Formulario;
+import sistema.tickets.FormularioEmpleador;
+import sistema.tickets.TicketEmpleadoPretenso;
+import sistema.tickets.TicketEmpleador;
 
 public class CalculoCoincidencias {
 

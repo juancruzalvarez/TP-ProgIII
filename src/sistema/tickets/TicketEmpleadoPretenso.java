@@ -1,6 +1,4 @@
-package systema.tickets;
-
-import java.time.LocalDate;
+package sistema.tickets;
 
 public class TicketEmpleadoPretenso extends Ticket {
     private boolean exito;
@@ -16,4 +14,6 @@ public class TicketEmpleadoPretenso extends Ticket {
     public void setExito(boolean exito){
         this.exito = exito;
     }
+
+
 }

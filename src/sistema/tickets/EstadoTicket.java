@@ -1,4 +1,4 @@
-package systema.tickets;
+package sistema.tickets;
 
 public enum EstadoTicket {
     ACTIVO,

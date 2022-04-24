@@ -1,4 +1,4 @@
-package systema.tickets;
+package sistema.tickets;
 import sistemaPuntaje.Iopcion;
 import sistemaPuntaje.OpcionA;
 import sistemaPuntaje.OpcionB;
@@ -44,7 +44,7 @@ public class Formulario {
     	switch(this.remuneracion) {
     	case "hasta V1"-> {rta= new OpcionA();}
     	case "entre V1 y V2" -> {rta= new OpcionB();}
-    	case "más de V2"->{rta= new OpcionC();}
+    	case "mï¿½s de V2"->{rta= new OpcionC();}
     	}
     	return rta;
     }
@@ -74,7 +74,7 @@ public class Formulario {
     	switch(this.rangoEtario) {
     	case "menos de 40"-> {rta= new OpcionA();}
     	case "40 a 50" -> {rta= new OpcionB();}
-    	case "más de 50"->{rta= new OpcionC();}
+    	case "mï¿½s de 50"->{rta= new OpcionC();}
     	}
     	return rta;
     }

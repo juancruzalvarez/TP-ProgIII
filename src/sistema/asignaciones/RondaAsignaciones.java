@@ -1,8 +1,8 @@
-package systema.asignaciones;
+package sistema.asignaciones;
 
-import systema.tickets.Ticket;
-import systema.tickets.TicketEmpleadoPretenso;
-import systema.tickets.TicketEmpleador;
+import sistema.tickets.Ticket;
+import sistema.tickets.TicketEmpleadoPretenso;
+import sistema.tickets.TicketEmpleador;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class RondaAsignaciones {
     private LocalDate fechaDeGeneracion;
-    private Map<Ticket, List<UsuarioPuntaje>> listasDeAsignacion;
+    private Map<Ticket, List<TicketPuntaje>> listasDeAsignacion;
 
     public RondaAsignaciones(List<TicketEmpleadoPretenso> ticketsEmpleados, List<TicketEmpleador> ticketsEmpleadores){
         fechaDeGeneracion = LocalDate.now();
@@ -22,7 +22,7 @@ public class RondaAsignaciones {
 
 
     //pensar si deberia tirar exepcion o retornar null.
-    public List<UsuarioPuntaje> getListaDeAsignacion(Ticket ticket){
+    public List<TicketPuntaje> getListaDeAsignacion(Ticket ticket){
         if(!listasDeAsignacion.containsKey(ticket)){
             //no hay lista de asignacion para el ticket.
             return null;
@@ -48,8 +48,8 @@ public class RondaAsignaciones {
                     listasDeAsignacion.put(ticketEmpleador, new ArrayList<>());
                 }
                 double puntaje = calculadorPuntajes.calcularCoincidencia(ticketEmpleador, ticketEmpleado);
-                listasDeAsignacion.get(ticketEmpleado).add(new UsuarioPuntaje(ticketEmpleador.getNombreDeUsuario(), puntaje));
-                listasDeAsignacion.get(ticketEmpleador).add(new UsuarioPuntaje(ticketEmpleado.getNombreDeUsuario(), puntaje));
+                listasDeAsignacion.get(ticketEmpleado).add(new TicketPuntaje(ticketEmpleador, puntaje));
+                listasDeAsignacion.get(ticketEmpleador).add(new TicketPuntaje(ticketEmpleado, puntaje));
             });
         });
 

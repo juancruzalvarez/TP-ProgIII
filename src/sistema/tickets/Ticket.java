@@ -1,4 +1,4 @@
-package systema.tickets;
+package sistema.tickets;
 
 import java.time.LocalDate;
 
@@ -36,6 +36,9 @@ public abstract class Ticket {
 	public String getNombreDeUsuario() {
 		return nombreDeUsuario;
 	}
-    
+
+    public String toString(){
+        return "Duenio: "+ getNombreDeUsuario() + " Estado: "+getEstado() + " Formulario: "+getFormulario();
+    }
 
 }
