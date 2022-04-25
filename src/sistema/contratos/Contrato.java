@@ -16,6 +16,6 @@ public class Contrato {
     }
 
     public Ticket getTicketEmpleador(){
-        return ticketEmpleador;
+         return ticketEmpleador;
     }
 }

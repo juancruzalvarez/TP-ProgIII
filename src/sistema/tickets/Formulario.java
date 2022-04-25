@@ -44,7 +44,7 @@ public class Formulario {
     	switch(this.remuneracion) {
     	case "hasta V1"-> {rta= new OpcionA();}
     	case "entre V1 y V2" -> {rta= new OpcionB();}
-    	case "m�s de V2"->{rta= new OpcionC();}
+    	case "mas de V2"->{rta= new OpcionC();}
     	}
     	return rta;
     }
@@ -74,7 +74,7 @@ public class Formulario {
     	switch(this.rangoEtario) {
     	case "menos de 40"-> {rta= new OpcionA();}
     	case "40 a 50" -> {rta= new OpcionB();}
-    	case "m�s de 50"->{rta= new OpcionC();}
+    	case "mas de 50"->{rta= new OpcionC();}
     	}
     	return rta;
     }
@@ -97,6 +97,9 @@ public class Formulario {
     	case "terciario"->{rta= new OpcionC();}
     	}
     	return rta;
+    }
+    public String getPuesto() {
+    	return this.puestoLaboral;
     }
 
 
