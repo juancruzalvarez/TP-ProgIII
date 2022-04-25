@@ -72,10 +72,10 @@ public class Usuarios {
    }
 
    /**
-   *  Crea un nuevo usuario del tipo indicado.
-   * @param tipo
-   * @param nombreDeUsuario
-   * @param contraseña
+   *  Registra un nuevo usuario en el sistema del tipo indicado.
+   * @param tipo Empleado o empleador
+   * @param nombreDeUsuario Nombre de usuario
+   * @param contraseña Contraseña
    */
    public void registrarUsuario(TipoUsuario tipo, String nombreDeUsuario, String contraseña) throws NombreDeUsuarioEnUsoException {
       if(empleadores.containsKey(nombreDeUsuario) || empleadosPretensos.containsKey(nombreDeUsuario)) {
@@ -85,14 +85,28 @@ public class Usuarios {
       ((Map<String, Usuario>)(tipo == TipoUsuario.EMPLEADOR ? empleadores : empleadosPretensos)).put(nombreDeUsuario, usuarioNuevo);
    }
 
+    /**
+     * Devuelve una lista con los usuarios del tipo indicado.
+     * @param tipo Tipo de usuario del que devolver la lista (Empleado o empleador).
+     * @return  Lista conteniendo usuarios del tipo indicado por @tipo.
+     */
    public Map<String, Usuario> getUsuarios(TipoUsuario tipo){
       return (Map<String, Usuario>) (tipo == TipoUsuario.EMPLEADOR ? empleadores : empleadosPretensos);
    }
 
+    /**
+     *  Devuelve si existe un usuario en el sistema que tenga el nombre de usuario indicado.
+     * @param nombreDeUsuario Nombre de usuario a buscar.
+     * @return true si existe, false si no.
+     */
    public boolean existeUsuario(String nombreDeUsuario){
       return empleadores.containsKey(nombreDeUsuario) || empleadosPretensos.containsKey(nombreDeUsuario);
    }
 
+    /**
+     *  Devuelve el usuario dueño de la session actual.
+     * @return Usuario activo en el sistema.
+     */
    public Usuario getUsuarioActivo(){
       return usuarioActivo;
    }
