@@ -2,7 +2,7 @@ package sistema.usuarios;
 
 public class Empleador extends Usuario{
     private String nombre; // o razon social
-    private TipoEmpleador tipo; //persona fisica o juridica
+    private TipoEmpleador tipoEmpleador; //persona fisica o juridica
     private RubroEmpleador rubro; //salud, comercio local o comercio internacional
 
     public Empleador(String nombreDeUsuario, String constrasenia){
@@ -32,7 +32,7 @@ public class Empleador extends Usuario{
     public String toString() {
         return  "Usuario: " + nombreDeUsuario + '\n' +
                 (nombre != null ? "Nombre: " + nombre + '\n' : "") +
-                (tipo   != null ? "Tipo: "   + tipo   + '\n' : "") +
+                (tipoEmpleador   != null ? "Tipo: "   + tipoEmpleador   + '\n' : "") +
                 (rubro  != null ? "Rubro: "  + rubro  + '\n' : "");
     }
 
@@ -51,7 +51,7 @@ public class Empleador extends Usuario{
     }
 
     public void setTipo(TipoEmpleador tipo) {
-        this.tipo = tipo;
+        this.tipoEmpleador = tipo;
     }
 
     public RubroEmpleador getRubro() {
@@ -61,4 +61,9 @@ public class Empleador extends Usuario{
     public void setRubro(RubroEmpleador rubro) {
         this.rubro = rubro;
     }
+
+	public TipoEmpleador getTipoEmpleador() {
+		return tipoEmpleador;
+	}
+    
 }
