@@ -1,5 +1,6 @@
 package sistema.asignaciones;
 
+import sistema.tickets.EstadoTicket;
 import sistema.tickets.Ticket;
 import sistema.tickets.TicketEmpleadoPretenso;
 import sistema.tickets.TicketEmpleador;
@@ -38,9 +39,10 @@ public class RondaAsignaciones {
     private void generarListas(List<TicketEmpleadoPretenso> ticketsEmpleados, List<TicketEmpleador> ticketsEmpleadores){
         CalculoCoincidencias calculadorPuntajes = new CalculoCoincidencias();
         ticketsEmpleados.forEach( (ticketEmpleado) -> {
+           if(ticketEmpleado.getEstado()==EstadoTicket.ACTIVO) {
             ticketsEmpleadores.forEach( (ticketEmpleador) -> {
                 //por cada par de tickets, uno de cada tipo
-
+               if(ticketEmpleador.getEstado()==EstadoTicket.ACTIVO) {
                 if(!listasDeAsignacion.containsKey(ticketEmpleado)){
                     listasDeAsignacion.put(ticketEmpleado, new ArrayList<>());
                 }
@@ -50,7 +52,9 @@ public class RondaAsignaciones {
                 double puntaje = calculadorPuntajes.calcularCoincidencia(ticketEmpleador, ticketEmpleado);
                 listasDeAsignacion.get(ticketEmpleado).add(new TicketPuntaje(ticketEmpleador, puntaje));
                 listasDeAsignacion.get(ticketEmpleador).add(new TicketPuntaje(ticketEmpleado, puntaje));
+             }
             });
+        }
         });
 
         //ordenar las listas
