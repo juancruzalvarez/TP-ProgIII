@@ -94,34 +94,39 @@ public class Sistema {
         return asignaciones.getTickets(nombreDeUsuario);
     }
 
-
+    /**
+     *  Dado un contrato muestra que porcentaje del sueldo acordado debera cobrar como
+     *  comision la agencia a cada una de las partes.
+     *
+     * @param contrato  Contrato sobre el cual calcular comisiones.
+     */
     public void agCalcularComision(Contrato contrato){
-    double comisionempleador=0,comisionempleado=0;
-    Map<String, Usuario> empleadores,empleados;
-    empleadores=usuarios.getUsuarios(TipoUsuario.EMPLEADOR);
-    empleados=usuarios.getUsuarios(TipoUsuario.EMPLEADO_PRETENSO);
-    Empleador usrempleador =(Empleador) empleadores.get(contrato.getTicketEmpleador().getNombreDeUsuario());
-	EmpleadoPretenso usrempleado=(EmpleadoPretenso) empleados.get(contrato.getTicketEmpleado().getNombreDeUsuario());
-	Formulario frmempleado=contrato.getTicketEmpleado().getFormulario();
+        double comisionempleador=0,comisionempleado=0;
+        Map<String, Usuario> empleadores,empleados;
+        empleadores=usuarios.getUsuarios(TipoUsuario.EMPLEADOR);
+        empleados=usuarios.getUsuarios(TipoUsuario.EMPLEADO_PRETENSO);
+        Empleador usrempleador =(Empleador) empleadores.get(contrato.getTicketEmpleador().getNombreDeUsuario());
+        EmpleadoPretenso usrempleado=(EmpleadoPretenso) empleados.get(contrato.getTicketEmpleado().getNombreDeUsuario());
+        Formulario frmempleado=contrato.getTicketEmpleado().getFormulario();
 
-	switch(usrempleador.getRubro()) {
-	case SALUD: comisionempleador=0.6;break;
-	case COMERCIO_LOCAL: comisionempleador=0.7;break;
-	case COMERCIO_INTERNACIONAL:comisionempleador=0.8;break;
-	}
-	if(usrempleador.getTipoEmpleador()==TipoEmpleador.PERSONA_JURIDICA)
-		comisionempleador+=0.2;
-	comisionempleador-=usrempleador.getPuntaje()/100;
+        switch(usrempleador.getRubro()) {
+        case SALUD: comisionempleador=0.6;break;
+        case COMERCIO_LOCAL: comisionempleador=0.7;break;
+        case COMERCIO_INTERNACIONAL:comisionempleador=0.8;break;
+        }
+        if(usrempleador.getTipoEmpleador()==TipoEmpleador.PERSONA_JURIDICA)
+            comisionempleador+=0.2;
+        comisionempleador-=usrempleador.getPuntaje()/100;
 
-	switch(frmempleado.getPuesto()) {
-	case "Junior": comisionempleado=0.8;break;
-	case "Senior": comisionempleado=0.9;break;
-	case "Gerencial":comisionempleado=1;break;
-	}
-	comisionempleado-=usrempleado.getPuntaje()/100;
+        switch(frmempleado.getPuesto()) {
+            case "Junior": comisionempleado=0.8;break;
+            case "Senior": comisionempleado=0.9;break;
+            case "Gerencial":comisionempleado=1;break;
+        }
+        comisionempleado-=usrempleado.getPuntaje()/100;
 
-	System.out.println("La comsion que se le cobrara al empleador "+ usrempleador.getNombre() +" es de: "+comisionempleador*100+"%, por contratar al empleado "
-			+ usrempleado.getNombre()+ ", al cual se le cobrara una comsion de "+comisionempleado*100+"%");
+        System.out.println("La comsion que se le cobrara al empleador "+ usrempleador.getNombre() +" es de: "+comisionempleador*100+"%, por contratar al empleado "
+                + usrempleado.getNombre()+ ", al cual se le cobrara una comsion de "+comisionempleado*100+"%");
     }
 
 
