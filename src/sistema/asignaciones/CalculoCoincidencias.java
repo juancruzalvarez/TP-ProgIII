@@ -1,6 +1,7 @@
 package sistema.asignaciones;
 
 import sistemaPuntaje.Iopcion;
+import sistemaPuntaje.OpcionFactory;
 import sistema.tickets.Formulario;
 import sistema.tickets.FormularioEmpleador;
 import sistema.tickets.TicketEmpleadoPretenso;
@@ -14,13 +15,13 @@ public class CalculoCoincidencias {
     	Formulario frmempleado=empleado.getFormulario();
     	FormularioEmpleador frmempleador=(FormularioEmpleador) empleador.getFormulario();
     	
-    	puntaje+=frmempleador.getPesoLocacion()*comparaOpcion(frmempleador.getLocacion(),frmempleado.getLocacion());
-    	puntaje+=frmempleador.getPesoRemuneracion()*comparaOpcion(frmempleador.getRemuneracion(),frmempleado.getRemuneracion());
-    	puntaje+=frmempleador.getPesoCargaHoraria()*comparaOpcion(frmempleador.getCargaHoraria(),frmempleado.getCargaHoraria());
-    	puntaje+=frmempleador.getPesoPuestoLaboral()*comparaOpcion(frmempleador.getPuestoLaboral(),frmempleado.getPuestoLaboral());
-    	puntaje+=frmempleador.getPesoRangoEtario()*comparaOpcion(frmempleador.getRangoEtario(),frmempleado.getRangoEtario());
-    	puntaje+=frmempleador.getPesoExpPrevia()*comparaOpcion(frmempleador.getExpPrevia(),frmempleado.getExpPrevia());
-    	puntaje+=frmempleador.getPesoEstudios()*comparaOpcion(frmempleador.getEstudios(),frmempleado.getEstudios());
+    	puntaje+=frmempleador.getPesoLocacion()*comparaOpcion(OpcionFactory.getLocacion(frmempleador.getLocacion()),OpcionFactory.getLocacion(frmempleado.getLocacion()));
+    	puntaje+=frmempleador.getPesoRemuneracion()*comparaOpcion(OpcionFactory.getRemuneracion(frmempleador.getRemuneracion()),OpcionFactory.getRemuneracion(frmempleado.getRemuneracion()));
+    	puntaje+=frmempleador.getPesoCargaHoraria()*comparaOpcion(OpcionFactory.getCargaHoraria(frmempleador.getCargaHoraria()),OpcionFactory.getCargaHoraria(frmempleado.getCargaHoraria()));
+    	puntaje+=frmempleador.getPesoPuestoLaboral()*comparaOpcion(OpcionFactory.getPuestoLaboral(frmempleador.getPuestoLaboral()),OpcionFactory.getPuestoLaboral(frmempleado.getPuestoLaboral()));
+    	puntaje+=frmempleador.getPesoRangoEtario()*comparaOpcion(OpcionFactory.getRangoEtario(frmempleador.getRangoEtario()),OpcionFactory.getRangoEtario(frmempleado.getRangoEtario()));
+    	puntaje+=frmempleador.getPesoExpPrevia()*comparaOpcion(OpcionFactory.getExpPrevia(frmempleador.getExpPrevia()),OpcionFactory.getExpPrevia(frmempleado.getExpPrevia()));
+    	puntaje+=frmempleador.getPesoEstudios()*comparaOpcion(OpcionFactory.getEstudios(frmempleador.getEstudios()),OpcionFactory.getEstudios(frmempleado.getEstudios()));
     	
       return puntaje;
     }

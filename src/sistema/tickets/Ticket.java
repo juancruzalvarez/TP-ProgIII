@@ -46,6 +46,6 @@ public abstract class Ticket {
     }
     public abstract Contrato getContrato(Eleccion eleccionmutua);
 
-    //public abstract TipoUsuario getTipoDuenio();
+   
 
 }

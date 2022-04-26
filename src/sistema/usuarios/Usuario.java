@@ -27,8 +27,12 @@ public abstract class Usuario {
         return puntaje;
     }
 
-    public void setPuntaje(int puntaje){
-        this.puntaje = puntaje;
+    public void sumaPuntaje(int cant){
+        this.puntaje+=cant;
+    }
+    
+    public void restaPuntaje(int cant){
+        this.puntaje-=cant;
     }
 
 }

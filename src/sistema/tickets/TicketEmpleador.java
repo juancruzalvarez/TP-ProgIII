@@ -23,4 +23,17 @@ public class TicketEmpleador extends Ticket{
     public Contrato getContrato(Eleccion eleccionmutua) {
     	return new Contrato(eleccionmutua.getElegido(),eleccionmutua.getElector());
     }
+
+	public int getCantEmpleadosConseguidos() {
+		return cantEmpleadosConseguidos;
+	}
+
+	public void contrataEmpleado() {
+		this.cantEmpleadosConseguidos+=1;
+	}
+
+	public int getCantEmpleadosBuscados() {
+		return cantEmpleadosBuscados;
+	}
+    
 }

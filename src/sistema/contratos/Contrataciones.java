@@ -1,8 +1,10 @@
 package sistema.contratos;
 
-import sistema.tickets.Ticket;
-
 import java.util.List;
+
+import exepciones.TicketNoActivoException;
+import sistema.tickets.EstadoTicket;
+import sistema.tickets.Ticket;
 
 public class Contrataciones {
     private RondaDeElecciones rondaDeElecciones;
@@ -32,9 +34,17 @@ public class Contrataciones {
      *  Agrega una nueva eleccion a la ronda de elecciones.
      * @param elector Ticket perteneciente al usuario que esta realizando la eleccion
      * @param elegido Ticket elegido.
+     * @throws TicketNoActivoException 
      */
-    public void realizarEleccion(Ticket elector, Ticket elegido){
-        rondaDeElecciones.agregarEleccion(elector, elegido);
+    public void realizarEleccion(Ticket elector, Ticket elegido) throws TicketNoActivoException{
+    	if(elector.getEstado()==EstadoTicket.ACTIVO ) {
+    		if(elegido.getEstado()==EstadoTicket.ACTIVO) 
+    	      rondaDeElecciones.agregarEleccion(elector, elegido);
+    		else
+    			throw new TicketNoActivoException("El ticket que se eligio para realizar un contrato ya no esta Activo"); 
+    }
+    	else
+    		throw new TicketNoActivoException("Su ticket no esta Activo");
     }
 
     /**

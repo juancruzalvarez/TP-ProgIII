@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import exepciones.ContraseniaIncorrectaException;
 import exepciones.NombreDeUsuarioEnUsoException;
+import exepciones.TicketNoActivoException;
 import exepciones.UsuarioInexistenteException;
 import sistema.asignaciones.Asignaciones;
 import sistema.asignaciones.TicketPuntaje;
@@ -16,6 +17,8 @@ import sistema.contratos.Contrato;
 import sistema.tickets.EstadoTicket;
 import sistema.tickets.Formulario;
 import sistema.tickets.Ticket;
+import sistema.tickets.TicketEmpleadoPretenso;
+import sistema.tickets.TicketEmpleador;
 import sistema.usuarios.EmpleadoPretenso;
 import sistema.usuarios.Empleador;
 import sistema.usuarios.RubroEmpleador;
@@ -60,7 +63,16 @@ public class Sistema {
     }
     */
 
+    public void agFinalizaTicket(TicketEmpleador tEmpleador, TicketEmpleadoPretenso tEmpleado) {
+    	Map<String, Usuario> empleadores,empleados;
+        empleadores=usuarios.getUsuarios(TipoUsuario.EMPLEADOR);
+        empleados=usuarios.getUsuarios(TipoUsuario.EMPLEADO_PRETENSO);
+        Empleador usrempleador =(Empleador) empleadores.get(tEmpleador.getNombreDeUsuario());
+    	EmpleadoPretenso usrempleado=(EmpleadoPretenso) empleados.get(tEmpleado.getNombreDeUsuario());
+    	usrempleador.sumaPuntaje(10);
+    	usrempleado.sumaPuntaje(50);
 
+    }
 
     public List<Usuario> agGetUsuarios(){
         return Stream.concat(agGetUsuarios(TipoUsuario.EMPLEADOR).stream(), agGetUsuarios(TipoUsuario.EMPLEADO_PRETENSO).stream()).toList();
@@ -76,7 +88,6 @@ public class Sistema {
         }
         return asignaciones.getTickets(nombreDeUsuario);
     }
-
     
     public void agCalcularComision(Contrato contrato){
     double comisionempleador=0,comisionempleado=0;
@@ -167,7 +178,7 @@ public class Sistema {
         return aux;
     }
 
-    public void usrRealizarEleccion(Ticket elector, Ticket seleccion){
+    public void usrRealizarEleccion(Ticket elector, Ticket seleccion) throws TicketNoActivoException{
         contrataciones.realizarEleccion(elector, seleccion);
     }
 

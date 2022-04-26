@@ -28,84 +28,43 @@ public class Formulario {
         this.estudios = estudios;
     }
 
-    public Iopcion getLocacion() {
-    	Iopcion rta=null;
-    	switch(this.locacion) {
-    	case "Home Office"-> {rta= new OpcionA();}
-    	case "Presencial" -> {rta= new OpcionB();}
-    	case "Indistinto"->{rta= new OpcionC();}
-    	}
 
-    	return rta;
-        
-    }
+    public String getLocacion() {
+		return locacion;
+	}
 
-    public Iopcion getRemuneracion() {
-    	Iopcion rta=null;
-    	switch(this.remuneracion) {
-    	case "hasta V1"-> {rta= new OpcionA();}
-    	case "entre V1 y V2" -> {rta= new OpcionB();}
-    	case "mas de V2"->{rta= new OpcionC();}
-    	}
 
-    	return rta;
-    }
+	public String getRemuneracion() {
+		return remuneracion;
+	}
 
-    public Iopcion getCargaHoraria() {
-    	Iopcion rta=null;
-    	switch(this.cargaHoraria) {
-    	case "media"-> {rta= new OpcionA();}
-    	case "completa" -> {rta= new OpcionB();}
-    	case "extendida"->{rta= new OpcionC();}
-    	}
 
-    	return rta;
-    }
+	public String getCargaHoraria() {
+		return cargaHoraria;
+	}
 
-    public Iopcion getPuestoLaboral() {
-    	Iopcion rta=null;
-    	switch(this.puestoLaboral) {
-    	case "junior"-> {rta= new OpcionA();}
-    	case "senior" -> {rta= new OpcionB();}
-    	case "managment"->{rta= new OpcionC();}
-    	}
-    	return rta;
-    }
 
-    public Iopcion getRangoEtario() {
-    	Iopcion rta=null;
-    	switch(this.rangoEtario) {
-    	case "menos de 40"-> {rta= new OpcionA();}
-    	case "40 a 50" -> {rta= new OpcionB();}
-    	case "mas de 50"->{rta= new OpcionC();}
-    	}
-    	return rta;
-    }
+	public String getPuestoLaboral() {
+		return puestoLaboral;
+	}
 
-    public Iopcion getExpPrevia() {
-    	Iopcion rta=null;
-    	switch(this.expPrevia) {
-    	case "nada"-> {rta= new OpcionA();}
-    	case "media" -> {rta= new OpcionB();}
-    	case "mucha"->{rta= new OpcionC();}
-    	}
-		if(rta == null){
-			System.out.println("Error: "+ this.expPrevia);
-		}
-    	return rta;
-    }
 
-    public Iopcion getEstudios() {
-    	Iopcion rta=null;
-    	switch(this.estudios) {
-    	case "primario"-> {rta= new OpcionA();}
-    	case "secundario" -> {rta= new OpcionB();}
-    	case "terciario"->{rta= new OpcionC();}
-    	}
+	public String getRangoEtario() {
+		return rangoEtario;
+	}
 
-    	return rta;
-    }
-    public String getPuesto() {
+
+	public String getExpPrevia() {
+		return expPrevia;
+	}
+
+
+	public String getEstudios() {
+		return estudios;
+	}
+
+
+	public String getPuesto() {
     	return this.puestoLaboral;
     }
 
