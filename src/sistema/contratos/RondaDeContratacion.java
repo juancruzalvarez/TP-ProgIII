@@ -19,8 +19,7 @@ public class RondaDeContratacion {
 
     private void generarContratos(List<Eleccion> eleccionesMutuas){
         eleccionesMutuas.forEach(e -> {
-            Contrato aux = e.getElector().getTipoDuenio() == TipoUsuario.EMPLEADO_PRETENSO ? new Contrato(e.getElector(), e.getElegido()) : new Contrato(e.getElegido(),e.getElector());
-            contratos.add(aux);
+            contratos.add(e.getElector().getContrato(e));
         });
     }
 
