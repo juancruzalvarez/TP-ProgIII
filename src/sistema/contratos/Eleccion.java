@@ -4,6 +4,7 @@ import sistema.tickets.Ticket;
 
 public class Eleccion{
     private Ticket elector, elegido;
+    
     public Eleccion(Ticket elector, Ticket elegido){
         this.elector = elector;
         this.elegido = elegido;

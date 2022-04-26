@@ -40,5 +40,6 @@ public abstract class Ticket {
     public String toString(){
         return "Duenio: "+ getNombreDeUsuario() + " Estado: "+getEstado() + " Formulario: "+getFormulario();
     }
+    
 
 }

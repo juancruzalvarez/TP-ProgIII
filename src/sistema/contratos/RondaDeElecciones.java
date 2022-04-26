@@ -28,6 +28,16 @@ public class RondaDeElecciones {
         }
         //si encuentra una eleccion igual a la que se esta agregando agregar a elecciones nuevas, sino a elecciones.
         List<Eleccion> aAgregar = encontrado ? eleccionesMutuas : elecciones;
+//        List<Eleccion> aAgregar;
+//        if(encontrado) {
+//        	aAgregar=eleccionesMutuas;
+//        	
+//        }
+//        else {
+//        	aAgregar=elecciones;
+//        }
+        
+        
         aAgregar.add(new Eleccion(elector, elegido));
     }
 
