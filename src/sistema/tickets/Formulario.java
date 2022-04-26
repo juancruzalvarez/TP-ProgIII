@@ -35,6 +35,7 @@ public class Formulario {
     	case "Presencial" -> {rta= new OpcionB();}
     	case "Indistinto"->{rta= new OpcionC();}
     	}
+
     	return rta;
         
     }
@@ -46,6 +47,7 @@ public class Formulario {
     	case "entre V1 y V2" -> {rta= new OpcionB();}
     	case "mas de V2"->{rta= new OpcionC();}
     	}
+
     	return rta;
     }
 
@@ -56,6 +58,7 @@ public class Formulario {
     	case "completa" -> {rta= new OpcionB();}
     	case "extendida"->{rta= new OpcionC();}
     	}
+
     	return rta;
     }
 
@@ -86,6 +89,9 @@ public class Formulario {
     	case "media" -> {rta= new OpcionB();}
     	case "mucha"->{rta= new OpcionC();}
     	}
+		if(rta == null){
+			System.out.println("Error: "+ this.expPrevia);
+		}
     	return rta;
     }
 
@@ -96,6 +102,7 @@ public class Formulario {
     	case "secundario" -> {rta= new OpcionB();}
     	case "terciario"->{rta= new OpcionC();}
     	}
+
     	return rta;
     }
     public String getPuesto() {

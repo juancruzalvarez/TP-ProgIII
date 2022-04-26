@@ -1,5 +1,7 @@
 package sistema.tickets;
 
+import sistema.usuarios.TipoUsuario;
+
 public class TicketEmpleadoPretenso extends Ticket {
     private boolean exito;
     public TicketEmpleadoPretenso(String nombreDeUsuario, Formulario formulario){
@@ -15,5 +17,9 @@ public class TicketEmpleadoPretenso extends Ticket {
         this.exito = exito;
     }
 
+    @Override
+    public TipoUsuario getTipoDuenio() {
+        return TipoUsuario.EMPLEADO_PRETENSO;
+    }
 
 }

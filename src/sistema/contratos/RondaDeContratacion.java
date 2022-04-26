@@ -1,6 +1,7 @@
 package sistema.contratos;
 
 import sistema.tickets.Ticket;
+import sistema.usuarios.TipoUsuario;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,7 +18,10 @@ public class RondaDeContratacion {
     }
 
     private void generarContratos(List<Eleccion> eleccionesMutuas){
-        eleccionesMutuas.forEach(e -> contratos.add(new Contrato(e.getElector(), e.getElegido()))); //ver cual es el empleado y cual el empleador
+        eleccionesMutuas.forEach(e -> {
+            Contrato aux = e.getElector().getTipoDuenio() == TipoUsuario.EMPLEADO_PRETENSO ? new Contrato(e.getElector(), e.getElegido()) : new Contrato(e.getElegido(),e.getElector());
+            contratos.add(aux);
+        });
     }
 
     public List<Contrato> getContratos(){

@@ -40,7 +40,7 @@ public class Main {
                 5);
         pCrearTicket("empleador5",
                 "3",
-                new FormularioEmpleador("Home Office",4, "m�s de V2",4, "extendida",4, "senior",4, "menos de 40",4, "nada",4, "terciario",4),
+                new FormularioEmpleador("Home Office",4, "mas de V2",4, "extendida",4, "senior",4, "menos de 40",4, "nada",4, "terciario",4),
                 2);
 
         pRegistrarUsuario(TipoUsuario.EMPLEADO_PRETENSO, "marcos123", "4"); // No deberia registrarlo

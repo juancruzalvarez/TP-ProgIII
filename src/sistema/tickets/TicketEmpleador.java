@@ -1,5 +1,7 @@
 package sistema.tickets;
 
+import sistema.usuarios.TipoUsuario;
+
 public class TicketEmpleador extends Ticket{
 
     private int cantEmpleadosBuscados;
@@ -11,4 +13,8 @@ public class TicketEmpleador extends Ticket{
         this.cantEmpleadosConseguidos = 0;
     }
 
+    @Override
+    public TipoUsuario getTipoDuenio() {
+        return TipoUsuario.EMPLEADOR;
+    }
 }

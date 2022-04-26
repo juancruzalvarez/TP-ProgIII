@@ -1,5 +1,7 @@
 package sistema.tickets;
 
+import sistema.usuarios.TipoUsuario;
+
 import java.time.LocalDate;
 
 public abstract class Ticket {
@@ -40,5 +42,7 @@ public abstract class Ticket {
     public String toString(){
         return "Duenio: "+ getNombreDeUsuario() + " Estado: "+getEstado() + " Formulario: "+getFormulario();
     }
+
+    public abstract TipoUsuario getTipoDuenio();
 
 }
