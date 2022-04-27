@@ -1,8 +1,13 @@
 package sistema.tickets;
 
+import java.util.Map;
+
+import sistema.Sistema;
 import sistema.contratos.Contrato;
 import sistema.contratos.Eleccion;
+import sistema.usuarios.EmpleadoPretenso;
 import sistema.usuarios.TipoUsuario;
+import sistema.usuarios.Usuario;
 
 public class TicketEmpleadoPretenso extends Ticket {
     private boolean exito;
@@ -29,4 +34,10 @@ public class TicketEmpleadoPretenso extends Ticket {
     	return new Contrato(eleccionmutua.getElector(),eleccionmutua.getElegido());
     }
 
+    public Usuario getDuenioTicket() {
+    	Map<String, Usuario> aux=(Map<String, Usuario>) Sistema.getInstancia().agGetUsuarios(TipoUsuario.EMPLEADO_PRETENSO);
+    	EmpleadoPretenso usraux=(EmpleadoPretenso) aux.get(getNombreDeUsuario());
+    	return usraux;
+    	
+    }
 }

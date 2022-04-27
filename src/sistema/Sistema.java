@@ -64,11 +64,8 @@ public class Sistema {
     */
 
     public void agFinalizaTicket(TicketEmpleador tEmpleador, TicketEmpleadoPretenso tEmpleado) {
-    	Map<String, Usuario> empleadores,empleados;
-        empleadores=usuarios.getUsuarios(TipoUsuario.EMPLEADOR);
-        empleados=usuarios.getUsuarios(TipoUsuario.EMPLEADO_PRETENSO);
-        Empleador usrempleador =(Empleador) empleadores.get(tEmpleador.getNombreDeUsuario());
-    	EmpleadoPretenso usrempleado=(EmpleadoPretenso) empleados.get(tEmpleado.getNombreDeUsuario());
+        Empleador usrempleador =(Empleador) tEmpleador.getDuenioTicket();
+    	EmpleadoPretenso usrempleado=(EmpleadoPretenso) tEmpleado.getDuenioTicket();
     	usrempleador.sumaPuntaje(10);
     	usrempleado.sumaPuntaje(50);
 
@@ -91,12 +88,10 @@ public class Sistema {
     
     public void agCalcularComision(Contrato contrato){
     double comisionempleador=0,comisionempleado=0;
-    Map<String, Usuario> empleadores,empleados;
-    empleadores=usuarios.getUsuarios(TipoUsuario.EMPLEADOR);
-    empleados=usuarios.getUsuarios(TipoUsuario.EMPLEADO_PRETENSO);
-    Empleador usrempleador =(Empleador) empleadores.get(contrato.getTicketEmpleador().getNombreDeUsuario());
-	EmpleadoPretenso usrempleado=(EmpleadoPretenso) empleados.get(contrato.getTicketEmpleado().getNombreDeUsuario());
+
 	Formulario frmempleado=contrato.getTicketEmpleado().getFormulario();
+    Empleador usrempleador=(Empleador) contrato.getTicketEmpleador().getDuenioTicket();
+    EmpleadoPretenso usrempleado=(EmpleadoPretenso) contrato.getTicketEmpleado().getDuenioTicket();
 	
 	switch(usrempleador.getRubro()) {
 	case SALUD: comisionempleador=0.6;break; 
@@ -130,11 +125,14 @@ public class Sistema {
         contrataciones.realizarRondaDeContratacion();
     }
     
+    
     public void usrSuspenderTicket(Ticket ticket) {
-    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario()))
+    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario())) {
     		ticket.setEstado(EstadoTicket.SUSPENDIDO);
+    		Usuario usraux=ticket.getDuenioTicket();
+    		usraux.restaPuntaje(1);
     	//tirar Exception?
-    		
+    	}	
     }
     
 

@@ -83,4 +83,16 @@ public class EmpleadoPretenso extends Usuario{
     public TipoUsuario getTipo() {
         return TipoUsuario.EMPLEADO_PRETENSO;
     }
+
+	@Override
+	public void sumaPuntajePrimeroLista() {
+		this.puntaje+=5;
+		
+	}
+
+	@Override
+	public void restaPuntajeUltimoLista() {
+		this.puntaje-=5;
+		
+	}
 }

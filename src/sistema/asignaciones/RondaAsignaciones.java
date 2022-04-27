@@ -61,6 +61,11 @@ public class RondaAsignaciones {
         listasDeAsignacion.forEach( (ticket, lista)-> {
             lista.sort( (a, b)-> (a.getPuntaje() > b.getPuntaje() ? -1 : 1) );
         });
+        
+        listasDeAsignacion.forEach( (ticket, lista)-> {
+            lista.get(0).getTicket().getDuenioTicket().sumaPuntajePrimeroLista(); //suma puntaje por salir primero en la lista ya sea de empleadores o empleados
+            lista.get(lista.size()).getTicket().getDuenioTicket().restaPuntajeUltimoLista(); ////resta puntaje por salir ultimo en la lista
+        });
     }
 
 

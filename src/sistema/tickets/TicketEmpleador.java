@@ -1,8 +1,13 @@
 package sistema.tickets;
 
+import java.util.Map;
+
+import sistema.Sistema;
 import sistema.contratos.Contrato;
 import sistema.contratos.Eleccion;
+import sistema.usuarios.Empleador;
 import sistema.usuarios.TipoUsuario;
+import sistema.usuarios.Usuario;
 
 public class TicketEmpleador extends Ticket{
 
@@ -34,6 +39,14 @@ public class TicketEmpleador extends Ticket{
 
 	public int getCantEmpleadosBuscados() {
 		return cantEmpleadosBuscados;
+	}
+	
+
+	@Override
+	public Usuario getDuenioTicket() {
+		Map<String, Usuario> aux= (Map<String, Usuario>) Sistema.getInstancia().agGetUsuarios(TipoUsuario.EMPLEADOR);
+    	Empleador usraux=(Empleador) aux.get(getNombreDeUsuario());
+    	return usraux;
 	}
     
 }

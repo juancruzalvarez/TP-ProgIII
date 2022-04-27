@@ -34,5 +34,6 @@ public abstract class Usuario {
     public void restaPuntaje(int cant){
         this.puntaje-=cant;
     }
-
+    public abstract void sumaPuntajePrimeroLista();
+    public abstract void restaPuntajeUltimoLista();
 }

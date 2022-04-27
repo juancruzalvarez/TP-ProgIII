@@ -65,5 +65,17 @@ public class Empleador extends Usuario{
 	public TipoEmpleador getTipoEmpleador() {
 		return tipoEmpleador;
 	}
+
+	@Override
+	public void sumaPuntajePrimeroLista() {
+		this.puntaje+=10;
+		
+	}
+
+	@Override
+	public void restaPuntajeUltimoLista() {
+		puntaje-=20; //como es el ultimo en la lista no se debe elegir este empleado por lo tanto resta 20 puntos
+		
+	}
     
 }

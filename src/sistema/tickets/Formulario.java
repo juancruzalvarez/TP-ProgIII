@@ -1,8 +1,4 @@
 package sistema.tickets;
-import sistemaPuntaje.Iopcion;
-import sistemaPuntaje.OpcionA;
-import sistemaPuntaje.OpcionB;
-import sistemaPuntaje.OpcionC;
 
 public class Formulario {
 

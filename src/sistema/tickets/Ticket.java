@@ -3,6 +3,7 @@ package sistema.tickets;
 import sistema.contratos.Contrato;
 import sistema.contratos.Eleccion;
 import sistema.usuarios.TipoUsuario;
+import sistema.usuarios.Usuario;
 
 import java.time.LocalDate;
 
@@ -45,7 +46,7 @@ public abstract class Ticket {
         return "Duenio: "+ getNombreDeUsuario() + " Estado: "+getEstado() + " Formulario: "+getFormulario();
     }
     public abstract Contrato getContrato(Eleccion eleccionmutua);
-
+	public abstract Usuario getDuenioTicket();
    
 
 }
