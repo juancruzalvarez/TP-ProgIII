@@ -78,12 +78,6 @@ public class Sistema {
     public List<Usuario> agGetUsuarios(TipoUsuario tipo){
         return usuarios.getUsuarios(tipo).values().stream().toList();
     }
-    
-    public Usuario getDuenioTicket(Ticket t) {
-    	
-    	return usuarios.getUsuario(t.getNombreDeUsuario());
-    	
-    }
 
     public List<Ticket> agGetTickets(String nombreDeUsuario) throws UsuarioInexistenteException{
         if(!usuarios.existeUsuario(nombreDeUsuario)){
@@ -93,32 +87,35 @@ public class Sistema {
     }
     
     public void agCalcularComision(Contrato contrato){
-    double comisionempleador=0,comisionempleado=0;
+        double comisionempleador=0,comisionempleado=0;
 
-	Formulario frmempleado=contrato.getTicketEmpleado().getFormulario();
-    Empleador usrempleador=(Empleador) getDuenioTicket(contrato.getTicketEmpleador());
-    EmpleadoPretenso usrempleado=(EmpleadoPretenso) getDuenioTicket(contrato.getTicketEmpleado());
-	
-	switch(usrempleador.getRubro()) {
-	case SALUD: comisionempleador=0.6;break; 
-	case COMERCIO_LOCAL: comisionempleador=0.7;break;
-	case COMERCIO_INTERNACIONAL:comisionempleador=0.8;break;
-	}
-	if(usrempleador.getTipoEmpleador()==TipoEmpleador.PERSONA_JURIDICA)
-		comisionempleador+=0.2;
-	comisionempleador-=usrempleador.getPuntaje()/100;
-	
-	switch(frmempleado.getPuesto()) {
-	case "Junior": comisionempleado=0.8;break; 
-	case "Senior": comisionempleado=0.9;break;
-	case "Gerencial":comisionempleado=1;break;
-	}
-	comisionempleado-=usrempleado.getPuntaje()/100;
-	
-	System.out.println("La comsion que se le cobrara al empleador "+ usrempleador.getNombre() +" es de: "+comisionempleador*100+"%, por contratar al empleado "
-			+ usrempleado.getNombre()+ ", al cual se le cobrara una comsion de "+comisionempleado*100+"%");
+        Formulario frmempleado=contrato.getTicketEmpleado().getFormulario();
+        Empleador usrempleador=(Empleador) getDuenioTicket(contrato.getTicketEmpleador());
+        EmpleadoPretenso usrempleado=(EmpleadoPretenso) getDuenioTicket(contrato.getTicketEmpleado());
+
+        switch(usrempleador.getRubro()) {
+        case SALUD: comisionempleador=0.6;break;
+        case COMERCIO_LOCAL: comisionempleador=0.7;break;
+        case COMERCIO_INTERNACIONAL:comisionempleador=0.8;break;
+        }
+        if(usrempleador.getTipoEmpleador()==TipoEmpleador.PERSONA_JURIDICA)
+            comisionempleador+=0.2;
+        comisionempleador-=usrempleador.getPuntaje()/100;
+
+        switch(frmempleado.getPuesto()) {
+        case "Junior": comisionempleado=0.8;break;
+        case "Senior": comisionempleado=0.9;break;
+        case "Gerencial":comisionempleado=1;break;
+        }
+        comisionempleado-=usrempleado.getPuntaje()/100;
+
+        System.out.println("La comsion que se le cobrara al empleador "+ usrempleador.getNombre() +" es de: "+comisionempleador*100+"%, por contratar al empleado "
+                + usrempleado.getNombre()+ ", al cual se le cobrara una comsion de "+comisionempleado*100+"%");
     }
-     
+
+    public List<Contrato> agGetContratos(){
+        return contrataciones.getContratos();
+    }
 
     public void agRealizarRondaDeAsignaciones(){
 
@@ -186,6 +183,11 @@ public class Sistema {
 
     public void usrRealizarEleccion(Ticket elector, Ticket seleccion) throws TicketNoActivoException{
         contrataciones.realizarEleccion(elector, seleccion);
+    }
+
+
+    public Usuario getDuenioTicket(Ticket t) {
+        return usuarios.getUsuario(t.getNombreDeUsuario());
     }
 
 }

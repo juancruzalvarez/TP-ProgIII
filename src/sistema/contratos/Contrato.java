@@ -18,4 +18,12 @@ public class Contrato {
     public Ticket getTicketEmpleador(){
          return ticketEmpleador;
     }
+
+    @Override
+    public String toString() {
+        return "Contrato{" +
+                "ticketEmpleado=" + ticketEmpleado +
+                ", ticketEmpleador=" + ticketEmpleador +
+                '}';
+    }
 }

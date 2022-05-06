@@ -1,10 +1,9 @@
 package sistema.asignaciones;
 
 import sistema.Sistema;
-import sistema.tickets.EstadoTicket;
-import sistema.tickets.Ticket;
-import sistema.tickets.TicketEmpleadoPretenso;
-import sistema.tickets.TicketEmpleador;
+import sistema.tickets.*;
+import sistemaPuntaje.Iopcion;
+import sistemaPuntaje.OpcionFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,7 +37,6 @@ public class RondaAsignaciones {
     }
 
     private void generarListas(List<TicketEmpleadoPretenso> ticketsEmpleados, List<TicketEmpleador> ticketsEmpleadores){
-        CalculoCoincidencias calculadorPuntajes = new CalculoCoincidencias();
         ticketsEmpleados.forEach( (ticketEmpleado) -> {
            if(ticketEmpleado.getEstado()==EstadoTicket.ACTIVO) {
             ticketsEmpleadores.forEach( (ticketEmpleador) -> {
@@ -50,7 +48,7 @@ public class RondaAsignaciones {
                 if(!listasDeAsignacion.containsKey(ticketEmpleador)) {
                     listasDeAsignacion.put(ticketEmpleador, new ArrayList<>());
                 }
-                double puntaje = calculadorPuntajes.calcularCoincidencia(ticketEmpleador, ticketEmpleado);
+                double puntaje = calcularCoincidencia(ticketEmpleador, ticketEmpleado);
                 listasDeAsignacion.get(ticketEmpleado).add(new TicketPuntaje(ticketEmpleador, puntaje));
                 listasDeAsignacion.get(ticketEmpleador).add(new TicketPuntaje(ticketEmpleado, puntaje));
             
@@ -70,6 +68,25 @@ public class RondaAsignaciones {
             agencia.getDuenioTicket(lista.get(0).getTicket()).sumaPuntajePrimeroLista(); //suma puntaje por salir primero en la lista ya sea de empleadores o empleados
             agencia.getDuenioTicket(lista.get(lista.size()-1).getTicket()).restaPuntajeUltimoLista(); ////resta puntaje por salir ultimo en la lista
         });
+    }
+
+    private double calcularCoincidencia(TicketEmpleador empleador, TicketEmpleadoPretenso empleado){
+        double puntaje=0;
+        Formulario frmempleado=empleado.getFormulario();
+        FormularioEmpleador frmempleador=(FormularioEmpleador) empleador.getFormulario();
+
+        puntaje+=frmempleador.getPesoLocacion()*comparaOpcion(OpcionFactory.getLocacion(frmempleador.getLocacion()),OpcionFactory.getLocacion(frmempleado.getLocacion()));
+        puntaje+=frmempleador.getPesoRemuneracion()*comparaOpcion(OpcionFactory.getRemuneracion(frmempleador.getRemuneracion()),OpcionFactory.getRemuneracion(frmempleado.getRemuneracion()));
+        puntaje+=frmempleador.getPesoCargaHoraria()*comparaOpcion(OpcionFactory.getCargaHoraria(frmempleador.getCargaHoraria()),OpcionFactory.getCargaHoraria(frmempleado.getCargaHoraria()));
+        puntaje+=frmempleador.getPesoPuestoLaboral()*comparaOpcion(OpcionFactory.getPuestoLaboral(frmempleador.getPuestoLaboral()),OpcionFactory.getPuestoLaboral(frmempleado.getPuestoLaboral()));
+        puntaje+=frmempleador.getPesoRangoEtario()*comparaOpcion(OpcionFactory.getRangoEtario(frmempleador.getRangoEtario()),OpcionFactory.getRangoEtario(frmempleado.getRangoEtario()));
+        puntaje+=frmempleador.getPesoExpPrevia()*comparaOpcion(OpcionFactory.getExpPrevia(frmempleador.getExpPrevia()),OpcionFactory.getExpPrevia(frmempleado.getExpPrevia()));
+        puntaje+=frmempleador.getPesoEstudios()*comparaOpcion(OpcionFactory.getEstudios(frmempleador.getEstudios()),OpcionFactory.getEstudios(frmempleado.getEstudios()));
+
+        return puntaje;
+    }
+    private double comparaOpcion(Iopcion empleador, Iopcion empleado) {
+        return empleador.PuntajeOp(empleado);
     }
 
 
