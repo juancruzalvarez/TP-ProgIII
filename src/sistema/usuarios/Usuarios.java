@@ -2,7 +2,9 @@ package sistema.usuarios;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import exepciones.ContraseniaIncorrectaException;
 import exepciones.NombreDeUsuarioEnUsoException;
@@ -103,6 +105,7 @@ public class Usuarios {
       return empleadores.containsKey(nombreDeUsuario) || empleadosPretensos.containsKey(nombreDeUsuario);
    }
 
+   
     /**
      *  Devuelve el usuario dueño de la session actual.
      * @return Usuario activo en el sistema.
@@ -110,5 +113,14 @@ public class Usuarios {
    public Usuario getUsuarioActivo(){
       return usuarioActivo;
    }
+
+	public Usuario getUsuario(String nombreDeUsuario) {
+		Usuario aux;
+		aux = Stream.concat(empleadores.values().stream(),empleadosPretensos.values().stream())
+				.filter(u -> u.getNombreDeUsuario()
+				.equals(nombreDeUsuario))
+				.findAny().orElse(null);
+		return aux;
+	}
 
 }

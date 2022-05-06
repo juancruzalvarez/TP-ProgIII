@@ -1,5 +1,6 @@
 package sistema.asignaciones;
 
+import sistema.Sistema;
 import sistema.tickets.EstadoTicket;
 import sistema.tickets.Ticket;
 import sistema.tickets.TicketEmpleadoPretenso;
@@ -52,7 +53,8 @@ public class RondaAsignaciones {
                 double puntaje = calculadorPuntajes.calcularCoincidencia(ticketEmpleador, ticketEmpleado);
                 listasDeAsignacion.get(ticketEmpleado).add(new TicketPuntaje(ticketEmpleador, puntaje));
                 listasDeAsignacion.get(ticketEmpleador).add(new TicketPuntaje(ticketEmpleado, puntaje));
-             }
+            
+               }
             });
         }
         });
@@ -62,9 +64,11 @@ public class RondaAsignaciones {
             lista.sort( (a, b)-> (a.getPuntaje() > b.getPuntaje() ? -1 : 1) );
         });
         
+        Sistema agencia = Sistema.getInstancia();
         listasDeAsignacion.forEach( (ticket, lista)-> {
-            lista.get(0).getTicket().getDuenioTicket().sumaPuntajePrimeroLista(); //suma puntaje por salir primero en la lista ya sea de empleadores o empleados
-            lista.get(lista.size()).getTicket().getDuenioTicket().restaPuntajeUltimoLista(); ////resta puntaje por salir ultimo en la lista
+        	
+            agencia.getDuenioTicket(lista.get(0).getTicket()).sumaPuntajePrimeroLista(); //suma puntaje por salir primero en la lista ya sea de empleadores o empleados
+            agencia.getDuenioTicket(lista.get(lista.size()-1).getTicket()).restaPuntajeUltimoLista(); ////resta puntaje por salir ultimo en la lista
         });
     }
 

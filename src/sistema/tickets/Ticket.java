@@ -13,6 +13,7 @@ public abstract class Ticket {
     private EstadoTicket estado;
     private Formulario formulario;
 
+    
     public Ticket(String nombreDeUsuario, Formulario formulario){
         this.fechaDeAlta = LocalDate.now();
         this.nombreDeUsuario = nombreDeUsuario;
@@ -46,7 +47,7 @@ public abstract class Ticket {
         return "Duenio: "+ getNombreDeUsuario() + " Estado: "+getEstado() + " Formulario: "+getFormulario();
     }
     public abstract Contrato getContrato(Eleccion eleccionmutua);
-	public abstract Usuario getDuenioTicket();
+
    
 
 }

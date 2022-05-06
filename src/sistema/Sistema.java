@@ -64,8 +64,8 @@ public class Sistema {
     */
 
     public void agFinalizaTicket(TicketEmpleador tEmpleador, TicketEmpleadoPretenso tEmpleado) {
-        Empleador usrempleador =(Empleador) tEmpleador.getDuenioTicket();
-    	EmpleadoPretenso usrempleado=(EmpleadoPretenso) tEmpleado.getDuenioTicket();
+        Empleador usrempleador =(Empleador) getDuenioTicket(tEmpleador);
+    	EmpleadoPretenso usrempleado=(EmpleadoPretenso) getDuenioTicket(tEmpleado);
     	usrempleador.sumaPuntaje(10);
     	usrempleado.sumaPuntaje(50);
 
@@ -77,6 +77,12 @@ public class Sistema {
 
     public List<Usuario> agGetUsuarios(TipoUsuario tipo){
         return usuarios.getUsuarios(tipo).values().stream().toList();
+    }
+    
+    public Usuario getDuenioTicket(Ticket t) {
+    	
+    	return usuarios.getUsuario(t.getNombreDeUsuario());
+    	
     }
 
     public List<Ticket> agGetTickets(String nombreDeUsuario) throws UsuarioInexistenteException{
@@ -90,8 +96,8 @@ public class Sistema {
     double comisionempleador=0,comisionempleado=0;
 
 	Formulario frmempleado=contrato.getTicketEmpleado().getFormulario();
-    Empleador usrempleador=(Empleador) contrato.getTicketEmpleador().getDuenioTicket();
-    EmpleadoPretenso usrempleado=(EmpleadoPretenso) contrato.getTicketEmpleado().getDuenioTicket();
+    Empleador usrempleador=(Empleador) getDuenioTicket(contrato.getTicketEmpleador());
+    EmpleadoPretenso usrempleado=(EmpleadoPretenso) getDuenioTicket(contrato.getTicketEmpleado());
 	
 	switch(usrempleador.getRubro()) {
 	case SALUD: comisionempleador=0.6;break; 
@@ -126,12 +132,14 @@ public class Sistema {
     }
     
     
+    
     public void usrSuspenderTicket(Ticket ticket) {
     	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario())) {
     		ticket.setEstado(EstadoTicket.SUSPENDIDO);
-    		Usuario usraux=ticket.getDuenioTicket();
+    		Usuario usraux = getDuenioTicket(ticket);
     		usraux.restaPuntaje(1);
     	//tirar Exception?
+    		//agregar pre para mi.
     	}	
     }
     
