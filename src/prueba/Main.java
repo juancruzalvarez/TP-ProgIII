@@ -2,14 +2,19 @@ package prueba;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import exepciones.ContraseniaIncorrectaException;
 import exepciones.NombreDeUsuarioEnUsoException;
+import exepciones.TicketNoActivoException;
 import exepciones.UsuarioInexistenteException;
 import sistema.Sistema;
 import sistema.asignaciones.Asignaciones;
+import sistema.asignaciones.TicketPuntaje;
 import sistema.tickets.Formulario;
 import sistema.tickets.FormularioEmpleador;
+import sistema.tickets.Ticket;
 import sistema.usuarios.RubroEmpleador;
 import sistema.usuarios.TipoEmpleador;
 import sistema.usuarios.TipoUsuario;
@@ -26,7 +31,7 @@ public class Main {
                 new Formulario("Home Office", "entre V1 y V2", "extendida", "managment", "40 a 50", "nada", "secundario")
         );
         pRegistrarUsuario(TipoUsuario.EMPLEADOR, "empleador2", "2");
-        pCargarDatosUsuario("empleador2", "contraseni", "MC DONALS", TipoEmpleador.PERSONA_JURIDICA, RubroEmpleador.COMERCIO_INTERNACIONAL);    //no deberia cargarlos contraseÃ±a equivocada.
+        pCargarDatosUsuario("empleador2", "contraseni", "MC DONALS", TipoEmpleador.PERSONA_JURIDICA, RubroEmpleador.COMERCIO_INTERNACIONAL);    //no deberia cargarlos contraseña equivocada.
         pCargarDatosUsuario("empleador2", "2", "MC DONALS", TipoEmpleador.PERSONA_JURIDICA, RubroEmpleador.COMERCIO_INTERNACIONAL);
         pCrearTicket("empleador2",
                 "2",
@@ -88,6 +93,18 @@ public class Main {
         pMostrarListasDeAsignacion("empleador5", "3");
         pMostrarListasDeAsignacion("juan", "5");
         pMostrarListasDeAsignacion("pedro", "6");
+
+        pRealizarSeleccionAleatoria("marcos123", "1");
+        pRealizarSeleccionAleatoria("empleador2", "2");
+        pRealizarSeleccionAleatoria("empleador5", "3");
+        pRealizarSeleccionAleatoria("juan", "5");
+        pRealizarSeleccionAleatoria("pedro", "6");
+        Sistema.getInstancia().agRealizarRondaContrataciones();
+        Sistema.getInstancia().agGetContratos().forEach( c -> System.out.println(c));
+
+        System.out.println("Puntajes luego de ronda de contratacion:");
+        Sistema.getInstancia().agGetUsuarios().forEach( u -> System.out.println("Usuario: "+u.getNombreDeUsuario()+ " Puntaje: "+u.getPuntaje()));
+
 
     }
 
@@ -161,7 +178,6 @@ public class Main {
     }
 
     private static void pCrearTicket(String nombreDeUsuario, String contrasenia, Formulario formulario, int cantEmpleadosBuscados){
-        System.out.println("Se creo ticket correctamente de "+nombreDeUsuario);
         Sistema sistema = Sistema.getInstancia();
         try {
             sistema.usrLogin(nombreDeUsuario, contrasenia);
@@ -176,11 +192,11 @@ public class Main {
     }
 
     private static void pMostrarListasDeAsignacion(String nombreDeUsuario, String contrasenia){
+        Sistema sistema = Sistema.getInstancia();
         try {
-            Sistema.getInstancia().usrLogin(nombreDeUsuario, contrasenia);
+            sistema.usrLogin(nombreDeUsuario, contrasenia);
             System.out.println("Listas de asignacion del usuario "+nombreDeUsuario +":");
-            Sistema.getInstancia()
-                    .usrGetListasDeAsignacion()
+            sistema.usrGetListasDeAsignacion()
                     .forEach( (ticket, lista) -> {
                         System.out.println("    Ticket: "+ticket);
                         lista.forEach(ticketPuntaje -> System.out.println("        Ticket: "+ ticketPuntaje.getTicket() + " Puntaje: "+ ticketPuntaje.getPuntaje()));
@@ -191,5 +207,34 @@ public class Main {
             System.out.println("El nombre de usuario y la constrasenia no coinciden");
         }
 
+    }
+
+    private static void pRealizarSeleccionAleatoria(String nombreDeUsuario, String contrasenia){
+        Sistema sistema = Sistema.getInstancia();
+        Random r = new Random();
+
+        try{
+            sistema.usrLogin(nombreDeUsuario, contrasenia);
+            Map<Ticket, List<TicketPuntaje>> listasDeAsignaciones = sistema.usrGetListasDeAsignacion();
+            if(listasDeAsignaciones.isEmpty()){
+                System.out.println("El usuario" + nombreDeUsuario + " no tiene listas de asignacion sobre las cuales seleccionar.");
+                return;
+            }
+            listasDeAsignaciones.forEach( (ticket, lista) ->{
+                Ticket seleccionado = lista.get(r.nextInt(lista.size()-1)).getTicket();
+                System.out.println("Elector: " + ticket + "Eleccion :" + seleccionado);
+                try {
+                    sistema.usrRealizarEleccion(ticket, seleccionado);
+                } catch (TicketNoActivoException e) {
+                    System.out.println("Ticket no activo. "+ticket.toString());
+                }
+            });
+
+
+        } catch (UsuarioInexistenteException e) {
+            System.out.println("No existe ningun usuario cuyo nombre de usuario sea " + e.getNombreDeUsuario());
+        } catch (ContraseniaIncorrectaException e) {
+            System.out.println("El nombre de usuario y la constrasenia no coinciden");
+        }
     }
 }

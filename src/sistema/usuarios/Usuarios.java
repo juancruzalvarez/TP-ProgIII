@@ -2,7 +2,9 @@ package sistema.usuarios;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import exepciones.ContraseniaIncorrectaException;
 import exepciones.NombreDeUsuarioEnUsoException;
@@ -21,9 +23,9 @@ public class Usuarios {
    }
 
    /**
-   *  Inicia session en el sistema, verificando que exista el usuario y que coincidan las contraseÃ±as.
+   *  Inicia session en el sistema, verificando que exista el usuario y que coincidan las contraseñas.
    * @param nombreDeUsuario Nombre de usuario.
-   * @param constrasenia ContraseÃ±a.
+   * @param constrasenia Contraseña.
    */
    public void login(String nombreDeUsuario, String constrasenia) throws UsuarioInexistenteException, ContraseniaIncorrectaException {
       Usuario usr = null;
@@ -75,7 +77,7 @@ public class Usuarios {
    *  Registra un nuevo usuario en el sistema del tipo indicado.
    * @param tipo Empleado o empleador
    * @param nombreDeUsuario Nombre de usuario
-   * @param contraseÃ±a ContraseÃ±a
+   * @param contraseña Contraseña
    */
    public void registrarUsuario(TipoUsuario tipo, String nombreDeUsuario, String contrasenia) throws NombreDeUsuarioEnUsoException {
       if(empleadores.containsKey(nombreDeUsuario) || empleadosPretensos.containsKey(nombreDeUsuario)) {
@@ -103,12 +105,22 @@ public class Usuarios {
       return empleadores.containsKey(nombreDeUsuario) || empleadosPretensos.containsKey(nombreDeUsuario);
    }
 
+   
     /**
-     *  Devuelve el usuario dueÃ±o de la session actual.
+     *  Devuelve el usuario dueño de la session actual.
      * @return Usuario activo en el sistema.
      */
    public Usuario getUsuarioActivo(){
       return usuarioActivo;
    }
+
+	public Usuario getUsuario(String nombreDeUsuario) {
+		Usuario aux;
+		aux = Stream.concat(empleadores.values().stream(),empleadosPretensos.values().stream())
+				.filter(u -> u.getNombreDeUsuario()
+				.equals(nombreDeUsuario))
+				.findAny().orElse(null);
+		return aux;
+	}
 
 }

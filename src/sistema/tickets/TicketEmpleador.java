@@ -14,6 +14,7 @@ public class TicketEmpleador extends Ticket{
     private int cantEmpleadosBuscados;
     private int cantEmpleadosConseguidos;
 
+    
     public TicketEmpleador(String nombreDeUsuario, Formulario formulario, int cantEmpleadosBuscados){
         super(nombreDeUsuario, formulario);
         this.cantEmpleadosBuscados = cantEmpleadosBuscados;
@@ -39,14 +40,6 @@ public class TicketEmpleador extends Ticket{
 
 	public int getCantEmpleadosBuscados() {
 		return cantEmpleadosBuscados;
-	}
-	
-
-	@Override
-	public Usuario getDuenioTicket() {
-		Map<String, Usuario> aux= (Map<String, Usuario>) Sistema.getInstancia().agGetUsuarios(TipoUsuario.EMPLEADOR);
-    	Empleador usraux=(Empleador) aux.get(getNombreDeUsuario());
-    	return usraux;
 	}
     
 }

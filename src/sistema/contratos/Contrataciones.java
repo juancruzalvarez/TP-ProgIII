@@ -38,14 +38,13 @@ public class Contrataciones {
      */
     public void realizarEleccion(Ticket elector, Ticket elegido) throws TicketNoActivoException{
     	if(elector.getEstado()==EstadoTicket.ACTIVO ) {
-    		if(elegido.getEstado()==EstadoTicket.ACTIVO) 
-    	      rondaDeElecciones.agregarEleccion(elector, elegido);
-    		else
-    			throw new TicketNoActivoException("El ticket que se eligio para realizar un contrato ya no esta Activo"); 
-    }
-    	else
+            if (elegido.getEstado() == EstadoTicket.ACTIVO)
+                rondaDeElecciones.agregarEleccion(elector, elegido);
+            else
+                throw new TicketNoActivoException("El ticket que se eligio para realizar un contrato ya no esta Activo");
+        }else
     		throw new TicketNoActivoException("Su ticket no esta Activo");
-    }
+        }
 
     /**
      *  Devuelve una lista con los contratos generados en la ronda de contratacion.
