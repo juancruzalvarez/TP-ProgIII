@@ -36,10 +36,6 @@ public class Empleador extends Usuario{
                 (rubro  != null ? "Rubro: "  + rubro  + '\n' : "");
     }
 
-    @Override
-    public TipoUsuario getTipo() {
-        return TipoUsuario.EMPLEADOR;
-    }
 
 
     public String getNombre() {

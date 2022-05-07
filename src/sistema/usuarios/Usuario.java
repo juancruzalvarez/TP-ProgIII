@@ -13,7 +13,6 @@ public abstract class Usuario {
         puntaje = 0;
     }
 
-    public abstract TipoUsuario getTipo();
 
     public String getNombreDeUsuario() {
         return nombreDeUsuario;

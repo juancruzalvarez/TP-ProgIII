@@ -79,10 +79,6 @@ public class EmpleadoPretenso extends Usuario{
                 (getEdad()     >= 0    ? "Edad: "               + getEdad()     + '\n' : "");
     }
 
-    @Override
-    public TipoUsuario getTipo() {
-        return TipoUsuario.EMPLEADO_PRETENSO;
-    }
 
 	@Override
 	public void sumaPuntajePrimeroLista() {
