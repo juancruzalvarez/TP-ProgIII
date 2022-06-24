@@ -17,8 +17,15 @@ public class Usuarios {
    private Usuario usuarioActivo;
    private Map<String, Empleador> empleadores;
    private Map<String, EmpleadoPretenso> empleadosPretensos;
+   
+   private String nombreAdmin;
+	private String passAdmin;
     
    public Usuarios(){
+	   
+	   nombreAdmin = "XIMENA";
+		passAdmin = "1234";
+	   
       usuarioActivo = null;
       empleadores = new HashMap<>();
       empleadosPretensos = new HashMap<>();
@@ -40,21 +47,36 @@ public class Usuarios {
    * @param nombreDeUsuario Nombre de usuario.
    * @param constrasenia Contraseña.
    */
-   public void login(String nombreDeUsuario, String constrasenia) throws UsuarioInexistenteException, ContraseniaIncorrectaException {
-      Usuario usr = null;
-      if(empleadores.containsKey(nombreDeUsuario)){
-          usr = empleadores.get(nombreDeUsuario);
-      }else if(empleadosPretensos.containsKey(nombreDeUsuario)){
-          usr = empleadosPretensos.get(nombreDeUsuario);
-      }
+   public int login(String nombreDeUsuario, String constrasenia)
+			throws UsuarioInexistenteException, ContraseniaIncorrectaException {
+		Usuario usr = null;
+		int opcion = 10;
+		
+		
+		if (nombreDeUsuario.equals(this.nombreAdmin) && constrasenia.equals(this.passAdmin)) {
+			opcion = 0;
+			
+		} else if (empleadores.containsKey(nombreDeUsuario)) {
+			usr = empleadores.get(nombreDeUsuario);
+			opcion = 1;
+		} else if (empleadosPretensos.containsKey(nombreDeUsuario)) {
+			usr = empleadosPretensos.get(nombreDeUsuario);
+			opcion = 2;
+		}
 
-      if(usr == null){
-          throw new UsuarioInexistenteException("No existe ningun usuario con ese nombre de usuario.", nombreDeUsuario);
-      }else if(!usr.getconstrasenia().equals(constrasenia)){
-          throw new ContraseniaIncorrectaException("La constrasenia no corresponde con el nombre de usuario.");
-      }
-      usuarioActivo = usr;
-   }
+		if (usr == null && opcion != 0) {
+
+			throw new UsuarioInexistenteException("No existe ningun usuario con ese nombre de usuario.",
+					nombreDeUsuario);
+		} else if (opcion != 0 && !usr.getconstrasenia().equals(constrasenia)) {
+			throw new ContraseniaIncorrectaException("La constrasenia no corresponde con el nombre de usuario.");
+		} else {
+			usuarioActivo = usr;
+			return opcion;
+		}
+
+	}
+
 
   /**
    * Actualiza los datos del usuario actual siendo este del tipo empleado pretenso.

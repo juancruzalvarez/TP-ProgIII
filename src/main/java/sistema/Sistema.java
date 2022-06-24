@@ -226,8 +226,8 @@ public class Sistema {
         usuarios.registrarUsuario(tipo, nombreDeUsuario, contrasenia);
     }
 
-    public void usrLogin(String nombreDeUsuario, String constrasenia) throws UsuarioInexistenteException, ContraseniaIncorrectaException{
-        usuarios.login(nombreDeUsuario, constrasenia);
+    public int usrLogin(String nombreDeUsuario, String constrasenia) throws UsuarioInexistenteException, ContraseniaIncorrectaException{
+        return usuarios.login(nombreDeUsuario, constrasenia);
     }
 
     public void usrLogout(){
