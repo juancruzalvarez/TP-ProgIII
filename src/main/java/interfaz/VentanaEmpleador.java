@@ -2,11 +2,16 @@ package interfaz;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowListener;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -18,7 +23,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class VentanaEmpleador extends JFrame implements IVista,KeyListener{
+import sistema.asignaciones.TicketPuntaje;
+import sistema.tickets.EstadoTicket;
+import sistema.tickets.Ticket;
+
+public class VentanaEmpleador extends JFrame implements IVista,KeyListener, ActionListener{
 
 	private JPanel contentPane;
 	private JTabbedPane tabbedPane;
@@ -61,20 +70,30 @@ public class VentanaEmpleador extends JFrame implements IVista,KeyListener{
 	private JPanel panel_3;
 	private JLabel lblMisTickets;
 	private JScrollPane scrollPane;
-	private JList<String> list;
+	private JList<Ticket> Ticket_list;
 	private JButton btnNewButton_1;
 	private JButton btnNewButton_2;
 	private JButton btnNewButton_3;
-	private JLabel lblNewLabel_16;
-	private JScrollPane scrollPane_1;
-	private JList<String> list_1;
-	private JButton btnNewButton_4;
 	private JLabel lblNewLabel_17;
 	private JScrollPane scrollPane_2;
 	private JButton btnNewButton_5;
 	private JList<String> list_2;
 	private JScrollPane scrollPane_3;
 	private JList<String> list_3;
+	private DefaultListModel<Ticket> modeloLista;
+	private DefaultListModel<Ticket> modeloListaTicketsA;
+	private DefaultListModel<TicketPuntaje> modeloListaTicketP;
+	private JPanel panel;
+	private JPanel panel_1;
+	private JLabel lblNewLabel_16;
+	private JScrollPane scrollPane_1;
+	private JList<Ticket> listTicketsActivados;
+	private JButton btnNewButton;
+	private JLabel lblNewLabel_18;
+	private JScrollPane scrollPane_4;
+	private JList<TicketPuntaje> listPosiblesE;
+	private JButton btnNewButton_4;
+	private JButton btnNewButton_6;
 
 	/**
 	 * Launch the application.
@@ -301,8 +320,8 @@ public class VentanaEmpleador extends JFrame implements IVista,KeyListener{
 		this.scrollPane.setBounds(10, 42, 578, 128);
 		this.panel_3.add(this.scrollPane);
 		
-		this.list = new JList<String>();
-		this.scrollPane.setViewportView(this.list);
+		this.Ticket_list = new JList<Ticket>();
+		this.scrollPane.setViewportView(this.Ticket_list);
 		
 		this.btnNewButton_1 = new JButton("Suspender");
 		this.btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -321,23 +340,51 @@ public class VentanaEmpleador extends JFrame implements IVista,KeyListener{
 		
 		this.panel_Lista_Empleados = new JPanel();
 		this.tabbedPane.addTab("Contrataciones", null, this.panel_Lista_Empleados, null);
-		this.panel_Lista_Empleados.setLayout(null);
+		this.panel_Lista_Empleados.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		this.lblNewLabel_16 = new JLabel(" Lista de Empleados Pretensos");
+		this.panel = new JPanel();
+		this.panel_Lista_Empleados.add(this.panel);
+		this.panel.setLayout(null);
+		
+		this.lblNewLabel_16 = new JLabel("Tickets Activados");
+		this.lblNewLabel_16.setBounds(10, 11, 164, 19);
 		this.lblNewLabel_16.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		this.lblNewLabel_16.setBounds(10, 11, 206, 14);
-		this.panel_Lista_Empleados.add(this.lblNewLabel_16);
+		this.panel.add(this.lblNewLabel_16);
 		
 		this.scrollPane_1 = new JScrollPane();
-		this.scrollPane_1.setBounds(10, 47, 578, 243);
-		this.panel_Lista_Empleados.add(this.scrollPane_1);
+		this.scrollPane_1.setBounds(10, 40, 279, 366);
+		this.panel.add(this.scrollPane_1);
 		
-		this.list_1 = new JList<String>();
-		this.scrollPane_1.setViewportView(this.list_1);
+		this.listTicketsActivados = new JList<Ticket>();
+		this.scrollPane_1.setViewportView(this.listTicketsActivados);
 		
-		this.btnNewButton_4 = new JButton("Generar Contrato");
-		this.btnNewButton_4.setBounds(227, 301, 124, 23);
-		this.panel_Lista_Empleados.add(this.btnNewButton_4);
+		this.btnNewButton = new JButton("Seleccionar");
+		this.btnNewButton.setBounds(200, 417, 89, 23);
+		this.panel.add(this.btnNewButton);
+		
+		this.btnNewButton_6 = new JButton("Actualizar");
+		this.btnNewButton_6.setBounds(20, 417, 89, 23);
+		this.panel.add(this.btnNewButton_6);
+		
+		this.panel_1 = new JPanel();
+		this.panel_Lista_Empleados.add(this.panel_1);
+		this.panel_1.setLayout(null);
+		
+		this.lblNewLabel_18 = new JLabel("Posibles Empleados");
+		this.lblNewLabel_18.setBounds(10, 11, 153, 19);
+		this.lblNewLabel_18.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		this.panel_1.add(this.lblNewLabel_18);
+		
+		this.scrollPane_4 = new JScrollPane();
+		this.scrollPane_4.setBounds(10, 41, 279, 366);
+		this.panel_1.add(this.scrollPane_4);
+		
+		this.listPosiblesE = new JList<TicketPuntaje>();
+		this.scrollPane_4.setViewportView(this.listPosiblesE);
+		
+		this.btnNewButton_4 = new JButton("Contratar");
+		this.btnNewButton_4.setBounds(200, 418, 89, 23);
+		this.panel_1.add(this.btnNewButton_4);
 		
 		this.panel_resultados = new JPanel();
 		this.tabbedPane.addTab("Resultados", null, this.panel_resultados, null);
@@ -383,8 +430,50 @@ public class VentanaEmpleador extends JFrame implements IVista,KeyListener{
 		this.textFieldPexp.addKeyListener(this);
 		this.textFieldPpuesto.addKeyListener(this);
 		this.textFieldCantE.addKeyListener(this);
+		this.btnCrearTicket.addKeyListener(this);
+		this.btnNewButton_6.addKeyListener(this);
 		
+		this.modeloLista=new DefaultListModel<Ticket>();
+		this.Ticket_list.setModel(modeloLista);
 		
+		this.modeloListaTicketsA=new DefaultListModel<Ticket>();
+		this.listTicketsActivados.setModel(modeloListaTicketsA);
+		
+		this.modeloListaTicketP=new DefaultListModel<TicketPuntaje>();
+		this.listPosiblesE.setModel(modeloListaTicketP);
+	}
+	public TicketPuntaje EmpleadoAcontratar() {
+		return this.listPosiblesE.getSelectedValue();
+	}
+	public void actualizaPosiblesE(List<TicketPuntaje> tickets) {
+		this.modeloListaTicketP.clear();
+		Iterator<TicketPuntaje> it3=tickets.iterator();
+		while(it3.hasNext()) 
+			this.modeloListaTicketP.addElement(it3.next());
+		}
+	
+	public void actualizaTicketsListaA(List<Ticket> tickets) {
+		Ticket aux=null;
+		this.modeloListaTicketsA.clear();
+		Iterator<Ticket> it2=tickets.iterator();
+		while(it2.hasNext()) {
+			aux=it2.next();
+			if(aux.getEstado()==EstadoTicket.ACTIVO)
+			this.modeloListaTicketsA.addElement(aux);
+		}
+	}
+	public Ticket ticketActivoSeleccionado() {
+		return this.listTicketsActivados.getSelectedValue();
+	}
+	
+	public void agregarTicket(List<Ticket> tickets) {
+		this.modeloLista.clear();
+		Iterator<Ticket> it=tickets.iterator();
+		while(it.hasNext())
+			this.modeloLista.addElement(it.next());
+	}
+	public Ticket ticketSeleccionado() {
+		return this.Ticket_list.getSelectedValue();
 	}
 
 	@Override
@@ -395,6 +484,9 @@ public class VentanaEmpleador extends JFrame implements IVista,KeyListener{
 		this.btnNewButton_3.addActionListener(actionListener);
 		this.btnNewButton_4.addActionListener(actionListener);
 		this.btnNewButton_5.addActionListener(actionListener);
+		this.btnNewButton_6.addActionListener(actionListener);
+		this.btnNewButton.addActionListener(actionListener);
+		
 	}
 
 	@Override
@@ -470,5 +562,6 @@ public class VentanaEmpleador extends JFrame implements IVista,KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-	
+	public void actionPerformed(ActionEvent e) {
+	}
 }

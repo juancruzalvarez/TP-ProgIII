@@ -17,6 +17,7 @@ import interfaz.VentanaAgencia;
 import interfaz.VentanaEmpleadoPretenso;
 import interfaz.VentanaEmpleador;
 import sistema.Sistema;
+import sistema.tickets.FormularioEmpleador;
 import sistema.usuarios.TipoUsuario;
 
 public class Controlador implements ActionListener, WindowListener {
@@ -45,7 +46,7 @@ public class Controlador implements ActionListener, WindowListener {
 
 			try {
 
-			int tipo = Sistema.getInstancia().usrLogin(((Login) vista).getTextUsuario(),
+				int tipo = Sistema.getInstancia().usrLogin(((Login) vista).getTextUsuario(),
 						((Login) vista).getTextPass());
 
 				if (tipo == 0) { // agencia
@@ -84,28 +85,25 @@ public class Controlador implements ActionListener, WindowListener {
 				JOptionPane.showConfirmDialog(null, "Ya existe un usuario con ese nombre.", "",
 						JOptionPane.DEFAULT_OPTION);
 			}
-			
+
 			try {
-				Sistema.getInstancia().usrLogin(((Registro) vista).getNombreUsuario(),
-						((Registro) vista).getPass());
+				Sistema.getInstancia().usrLogin(((Registro) vista).getNombreUsuario(), ((Registro) vista).getPass());
 			} catch (UsuarioInexistenteException e1) {
 			} catch (ContraseniaIncorrectaException e1) {
 			}
-			
-			
+
 			Sistema.getInstancia().usrActualizarDatos(((Registro) vista).getNombre(), ((Registro) vista).getApellido(),
 					((Registro) vista).getTelefono(), ((Registro) vista).getEdad());
 
-			JOptionPane.showConfirmDialog(null, "registro exitoso", "",
-					 JOptionPane.DEFAULT_OPTION);
-			
+			JOptionPane.showConfirmDialog(null, "registro exitoso", "", JOptionPane.DEFAULT_OPTION);
+
 			vista.visible(false);
 			vista = new VentanaEmpleadoPretenso();
 			vista.setActionListener(this);
 			vista.setWindowListener(this);
 
 		} else if (e.getActionCommand().equals("Registrar empleador")) {
-			
+
 			try {
 				Sistema.getInstancia().usrRegistrarUsuario(TipoUsuario.EMPLEADOR,
 						((Registro) vista).getNombreUsuarioE(), ((Registro) vista).getPassE());
@@ -113,29 +111,60 @@ public class Controlador implements ActionListener, WindowListener {
 				JOptionPane.showConfirmDialog(null, "Ya existe un usuario con ese nombre.", "",
 						JOptionPane.DEFAULT_OPTION);
 			}
-			
+
 			try {
-				Sistema.getInstancia().usrLogin(((Registro) vista).getNombreUsuarioE(),
-						((Registro) vista).getPassE());
+				Sistema.getInstancia().usrLogin(((Registro) vista).getNombreUsuarioE(), ((Registro) vista).getPassE());
 			} catch (UsuarioInexistenteException e1) {
 			} catch (ContraseniaIncorrectaException e1) {
 			}
-			
-			
-			Sistema.getInstancia().usrActualizarDatos(((Registro) vista).getNombreE(), ((Registro) vista).getTipoPersona(),
-					((Registro) vista).getRubro());
-			JOptionPane.showConfirmDialog(null, "registro exitoso", "",
-					 JOptionPane.DEFAULT_OPTION);
+
+			Sistema.getInstancia().usrActualizarDatos(((Registro) vista).getNombreE(),
+					((Registro) vista).getTipoPersona(), ((Registro) vista).getRubro());
+			JOptionPane.showConfirmDialog(null, "registro exitoso", "", JOptionPane.DEFAULT_OPTION);
 
 			vista.visible(false);
 			vista = new VentanaEmpleador();
 			vista.setActionListener(this);
 			vista.setWindowListener(this);
 
-		}else if(e.getActionCommand().equals("Crear Ticket")) {
+		} else if (e.getActionCommand().equals("Crear Ticket")) {
+			Sistema.getInstancia()
+					.usrCrearTicket(new FormularioEmpleador(((VentanaEmpleador) vista).getLocacion(),
+							((VentanaEmpleador) vista).getLocacionP(), ((VentanaEmpleador) vista).getRemuneracion(),
+							((VentanaEmpleador) vista).getRemuneracionP(), ((VentanaEmpleador) vista).getCarga(),
+							((VentanaEmpleador) vista).getCargaP(), ((VentanaEmpleador) vista).getPuesto(),
+							((VentanaEmpleador) vista).getPuestoP(), ((VentanaEmpleador) vista).getRango(),
+							((VentanaEmpleador) vista).getRangoP(), ((VentanaEmpleador) vista).getExp(),
+							((VentanaEmpleador) vista).getExpP(), ((VentanaEmpleador) vista).getEstudios(),
+							((VentanaEmpleador) vista).getEstudiosP()), ((VentanaEmpleador) vista).getCantEmpleados());
+			((VentanaEmpleador) vista).agregarTicket(Sistema.getInstancia().usrGetTickets());
+		} else if (e.getActionCommand().equals("Suspender")) {
+
+			Sistema.getInstancia().usrSuspenderTicket(((VentanaEmpleador) vista).ticketSeleccionado());
+			((VentanaEmpleador) vista).agregarTicket(Sistema.getInstancia().usrGetTickets());
+
+		} else if (e.getActionCommand().equals("Activar")) {
+
+			Sistema.getInstancia().usrActivarTicket(((VentanaEmpleador) vista).ticketSeleccionado());
+			((VentanaEmpleador) vista).agregarTicket(Sistema.getInstancia().usrGetTickets());
+
+		} else if (e.getActionCommand().equals("Eliminar")) {
+
+			Sistema.getInstancia().usrFinalizarTicket(((VentanaEmpleador) vista).ticketSeleccionado());
+			((VentanaEmpleador) vista).agregarTicket(Sistema.getInstancia().usrGetTickets());
+		
+		} else if (e.getActionCommand().equals("Actualizar")) {
+			((VentanaEmpleador) vista).actualizaTicketsListaA(Sistema.getInstancia().usrGetTickets());
+			
+		
+
+		} else if (e.getActionCommand().equals("ACTIVAR")) {
+			Sistema.getInstancia().agRealizarRondaDeAsignaciones();
+			JOptionPane.showConfirmDialog(null, "Ronda de Asignaciones Activada con Exito", "", JOptionPane.DEFAULT_OPTION);
 			
 		}
-
+		else if (e.getActionCommand().equals("Seleccionar"))
+			((VentanaEmpleador) vista).actualizaPosiblesE(Sistema.getInstancia().usrGetTicketPosiblesEmpleados(((VentanaEmpleador) vista).ticketActivoSeleccionado()));
 
 	}
 

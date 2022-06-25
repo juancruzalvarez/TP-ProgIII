@@ -66,6 +66,7 @@ public class Formulario implements Serializable {
 	public String getPuesto() {
     	return this.puestoLaboral;
     }
+	
 
 
 }

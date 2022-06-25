@@ -45,7 +45,7 @@ public abstract class Ticket implements Serializable {
 	}
 
     public String toString(){
-        return "Duenio: "+ getNombreDeUsuario() + " Estado: "+getEstado() + " Formulario: "+getFormulario();
+        return "Owner: "+ getNombreDeUsuario() + " Estado: "+getEstado() + " Fecha: "+this.getFechaDeAlta()+ " Formulario: "+getFormulario();
     }
     public abstract Contrato getContrato(Eleccion eleccionmutua);
 

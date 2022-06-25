@@ -9,6 +9,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowListener;
 import java.awt.Font;
 import javax.swing.JComboBox;
@@ -17,15 +19,13 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 
-public class VentanaAgencia extends JFrame implements IVista {
+public class VentanaAgencia extends JFrame implements IVista,KeyListener {
 
 	private JPanel contentPane;
 	private JTabbedPane tabbedPane;
-	private JPanel panel_Ticket;
+	private JPanel panel_panelC;
 	private JPanel panel_Lista;
 	private JPanel panel_Comisiones;
-	private JPanel panel_2;
-	private JPanel panel_3;
 	private JPanel panel_Empleadores;
 	private JLabel lblNewLabel;
 	private JScrollPane scrollPane;
@@ -44,6 +44,12 @@ public class VentanaAgencia extends JFrame implements IVista {
 	private JTextField textField_1;
 	private JButton btnGananciasTotales;
 	private JTextField textField_2;
+	private JLabel lblNewLabel_3;
+	private JButton btnActivarEL;
+	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
+	private JButton btnActivarC;
+	private JButton btnNewButton_1;
 
 	/**
 	 * Launch the application.
@@ -76,17 +82,32 @@ public class VentanaAgencia extends JFrame implements IVista {
 		this.tabbedPane.setBounds(0, 0, 603, 520);
 		this.contentPane.add(this.tabbedPane);
 		
-		this.panel_Ticket = new JPanel();
-		this.tabbedPane.addTab("Gestión de Tickets", null, this.panel_Ticket, null);
-		this.panel_Ticket.setLayout(new GridLayout(2, 0, 0, 0));
+		this.panel_panelC = new JPanel();
+		this.tabbedPane.addTab("Panel de Control", null, this.panel_panelC, null);
+		this.panel_panelC.setLayout(null);
 		
-		this.panel_2 = new JPanel();
-		this.panel_Ticket.add(this.panel_2);
-		this.panel_2.setLayout(null);
+		this.lblNewLabel_3 = new JLabel("Panel de Control de Administrador");
+		this.lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		this.lblNewLabel_3.setBounds(10, 24, 295, 14);
+		this.panel_panelC.add(this.lblNewLabel_3);
 		
-		this.panel_3 = new JPanel();
-		this.panel_Ticket.add(this.panel_3);
-		this.panel_3.setLayout(null);
+		this.btnActivarEL = new JButton("ACTIVAR");
+		this.btnActivarEL.setBounds(253, 94, 127, 37);
+		this.panel_panelC.add(this.btnActivarEL);
+		
+		this.lblNewLabel_4 = new JLabel("Ronda de Encuentros Laborales");
+		this.lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		this.lblNewLabel_4.setBounds(37, 94, 205, 37);
+		this.panel_panelC.add(this.lblNewLabel_4);
+		
+		this.lblNewLabel_5 = new JLabel("Ronda de Contrataci\u00F3n");
+		this.lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		this.lblNewLabel_5.setBounds(37, 194, 205, 37);
+		this.panel_panelC.add(this.lblNewLabel_5);
+		
+		this.btnActivarC = new JButton(" ACTIVAR ");
+		this.btnActivarC.setBounds(253, 196, 127, 37);
+		this.panel_panelC.add(this.btnActivarC);
 		
 		this.panel_Lista = new JPanel();
 		this.tabbedPane.addTab("Usuarios", null, this.panel_Lista, null);
@@ -107,6 +128,10 @@ public class VentanaAgencia extends JFrame implements IVista {
 		
 		this.list_empleadores = new JList();
 		this.scrollPane.setViewportView(this.list_empleadores);
+		
+		this.btnNewButton_1 = new JButton("");
+		this.btnNewButton_1.setBounds(243, 11, 47, 23);
+		this.panel_Empleadores.add(this.btnNewButton_1);
 		
 		this.panel_Empleados = new JPanel();
 		this.panel_Lista.add(this.panel_Empleados);
@@ -154,9 +179,9 @@ public class VentanaAgencia extends JFrame implements IVista {
 		this.panel_Comisiones.add(this.textField);
 		this.textField.setColumns(10);
 		
-		this.lblNewLabel_2 = new JLabel("El Empleador Paga:");
+		this.lblNewLabel_2 = new JLabel("El Empleado P. Paga:");
 		this.lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		this.lblNewLabel_2.setBounds(310, 224, 111, 19);
+		this.lblNewLabel_2.setBounds(310, 224, 122, 19);
 		this.panel_Comisiones.add(this.lblNewLabel_2);
 		
 		this.textField_1 = new JTextField();
@@ -174,6 +199,9 @@ public class VentanaAgencia extends JFrame implements IVista {
 		this.textField_2.setColumns(10);
 		this.setVisible(true);
 		this.setResizable(false);
+		
+		this.btnActivarEL.addKeyListener(this);
+		this.btnActivarC.addKeyListener(this);
 	}
 
 	@Override
@@ -191,6 +219,24 @@ public class VentanaAgencia extends JFrame implements IVista {
 	@Override
 	public void setWindowListener(WindowListener w) {
 		this.addWindowListener(w);
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 }

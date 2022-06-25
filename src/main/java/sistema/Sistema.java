@@ -201,27 +201,35 @@ public class Sistema {
     public void agRealizarRondaDeAsignaciones(){
 
         asignaciones.realizarRondaDeAsignaciones();
-        contrataciones.iniciarRondaDeElecciones();
+        //contrataciones.iniciarRondaDeElecciones();
     }
 
     //dado las elecciones de los usuarios genera lista de systema.contratos.
     public void agRealizarRondaContrataciones(){
         contrataciones.realizarRondaDeContratacion();
     }
-    
-    
-    
     public void usrSuspenderTicket(Ticket ticket) {
-    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario())) {
+    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario())&&ticket.getEstado()!=EstadoTicket.CANCELADO) {
     		ticket.setEstado(EstadoTicket.SUSPENDIDO);
+    	}	
+    }
+    
+    
+    public void usrFinalizarTicket(Ticket ticket) {
+    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario())) {
+    		ticket.setEstado(EstadoTicket.CANCELADO);
     		Usuario usraux = getDuenioTicket(ticket);
     		usraux.restaPuntaje(1);
     	//tirar Exception?
     		//agregar pre para mi.
     	}	
     }
+    public void usrActivarTicket(Ticket ticket) {
+    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario()) &&ticket.getEstado()!=EstadoTicket.CANCELADO) {
+    		ticket.setEstado(EstadoTicket.ACTIVO);
     
-
+    	}
+    }
     public void usrRegistrarUsuario(TipoUsuario tipo, String nombreDeUsuario, String contrasenia) throws NombreDeUsuarioEnUsoException {
         usuarios.registrarUsuario(tipo, nombreDeUsuario, contrasenia);
     }
@@ -260,6 +268,9 @@ public class Sistema {
         asignaciones.getTickets(usuarios.getUsuarioActivo().getNombreDeUsuario())
                 .forEach( ticket -> aux.put(ticket, asignaciones.getListaDeAsignaciones(ticket)) );
         return aux;
+    }
+    public List<TicketPuntaje> usrGetTicketPosiblesEmpleados(Ticket ticket){
+    	return asignaciones.getListaDeAsignaciones(ticket);
     }
 
     public void usrRealizarEleccion(Ticket elector, Ticket seleccion) throws TicketNoActivoException{
