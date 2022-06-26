@@ -2,7 +2,11 @@ package sistema;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.stream.Stream;
 
 import exepciones.ContraseniaIncorrectaException;
@@ -15,7 +19,12 @@ import sistema.contratos.Contrataciones;
 import sistema.contratos.Contrato;
 import sistema.simulacion.SimulacionEmpleado;
 import sistema.simulacion.SimulacionEmpleador;
-import sistema.tickets.*;
+import sistema.tickets.EstadoTicket;
+import sistema.tickets.Formulario;
+import sistema.tickets.Ticket;
+import sistema.tickets.TicketEmpleadoPretenso;
+import sistema.tickets.TicketEmpleador;
+import sistema.tickets.TicketSimplificado;
 import sistema.usuarios.EmpleadoPretenso;
 import sistema.usuarios.Empleador;
 import sistema.usuarios.RubroEmpleador;
@@ -167,7 +176,7 @@ public class Sistema {
         return asignaciones.getTickets(nombreDeUsuario);
     }
     
-    public void agCalcularComision(Contrato contrato){
+    public String agCalcularComision(Contrato contrato){
         double comisionempleador=0,comisionempleado=0;
 
         Formulario frmempleado=contrato.getTicketEmpleado().getFormulario();
@@ -190,18 +199,22 @@ public class Sistema {
         }
         comisionempleado-=usrempleado.getPuntaje()/100;
 
-        System.out.println("La comsion que se le cobrara al empleador "+ usrempleador.getNombre() +" es de: "+comisionempleador*100+"%, por contratar al empleado "
-                + usrempleado.getNombre()+ ", al cual se le cobrara una comsion de "+comisionempleado*100+"%");
+        return ("La comsion que se le cobrara al empleador "+ usrempleador.getNombre() +" es de: "+comisionempleador*100+"% del sueldo\n"
+        		+ " pretendido, por contratar al empleado "
+                + usrempleado.getNombre()+ ", al cual se le cobrara una comsion de "+comisionempleado*100+"% del sueldo pretendido.\n");
     }
 
     public List<Contrato> agGetContratos(){
         return contrataciones.getContratos();
     }
+    public String agGetUsernameActivo(){
+    	return this.usuarios.getUsuarioActivo().getNombreDeUsuario();
+    }
 
     public void agRealizarRondaDeAsignaciones(){
 
         asignaciones.realizarRondaDeAsignaciones();
-        //contrataciones.iniciarRondaDeElecciones();
+        contrataciones.iniciarRondaDeElecciones();
     }
 
     //dado las elecciones de los usuarios genera lista de systema.contratos.
@@ -209,14 +222,14 @@ public class Sistema {
         contrataciones.realizarRondaDeContratacion();
     }
     public void usrSuspenderTicket(Ticket ticket) {
-    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario())&&ticket.getEstado()!=EstadoTicket.CANCELADO) {
+    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario())&&ticket.getEstado()!=EstadoTicket.CANCELADO && ticket.getEstado()!=EstadoTicket.FINALIZADO) {
     		ticket.setEstado(EstadoTicket.SUSPENDIDO);
     	}	
     }
     
     
     public void usrFinalizarTicket(Ticket ticket) {
-    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario())) {
+    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario())&&ticket.getEstado()!=EstadoTicket.FINALIZADO) {
     		ticket.setEstado(EstadoTicket.CANCELADO);
     		Usuario usraux = getDuenioTicket(ticket);
     		usraux.restaPuntaje(1);
@@ -225,7 +238,7 @@ public class Sistema {
     	}	
     }
     public void usrActivarTicket(Ticket ticket) {
-    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario()) &&ticket.getEstado()!=EstadoTicket.CANCELADO) {
+    	if(ticket.getNombreDeUsuario().equals(usuarios.getUsuarioActivo().getNombreDeUsuario()) &&ticket.getEstado()!=EstadoTicket.CANCELADO &&ticket.getEstado()!=EstadoTicket.FINALIZADO) {
     		ticket.setEstado(EstadoTicket.ACTIVO);
     
     	}

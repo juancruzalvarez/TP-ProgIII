@@ -21,5 +21,10 @@ public class TicketPuntaje implements Serializable {
         return puntaje;
     }
 
+	@Override
+	public String toString() {
+		return " [Ticket=" + ticket + ", Puntaje=" + puntaje + "]";
+	}
+
 
 }
