@@ -66,10 +66,10 @@ public class Usuarios {
 
 		if (usr == null && opcion != 0) {
 
-			throw new UsuarioInexistenteException("No existe ningun usuario con ese nombre de usuario.",
+			throw new UsuarioInexistenteException("No existe ningun perfil con ese nombre de usuario.",
 					nombreDeUsuario);
 		} else if (opcion != 0 && !usr.getconstrasenia().equals(constrasenia)) {
-			throw new ContraseniaIncorrectaException("La constrasenia no corresponde con el nombre de usuario.");
+			throw new ContraseniaIncorrectaException("La clave no corresponde con el nombre de usuario.");
 		} else {
 			usuarioActivo = usr;
 			return opcion;

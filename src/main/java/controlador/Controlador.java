@@ -81,53 +81,65 @@ public class Controlador implements ActionListener, WindowListener {
 		} else if (e.getActionCommand().equals("Registrar empleado pretenso")) {
 
 			try {
+				
+				
+				
+				
 				Sistema.getInstancia().usrRegistrarUsuario(TipoUsuario.EMPLEADO_PRETENSO,
 						((Registro) vista).getNombreUsuario(), ((Registro) vista).getPass());
+				
+				try {
+					Sistema.getInstancia().usrLogin(((Registro) vista).getNombreUsuario(), ((Registro) vista).getPass());
+				} catch (UsuarioInexistenteException e1) {
+				} catch (ContraseniaIncorrectaException e1) {
+				}
+	
+				Sistema.getInstancia().usrActualizarDatos(((Registro) vista).getNombre(), ((Registro) vista).getApellido(),
+						((Registro) vista).getTelefono(), ((Registro) vista).getEdad());
+	
+				JOptionPane.showConfirmDialog(null, "registro exitoso", "", JOptionPane.DEFAULT_OPTION);
+	
+				vista.visible(false);
+				vista = new VentanaEmpleadoPretenso();
+				vista.setActionListener(this);
+				vista.setWindowListener(this);
+				
 			} catch (NombreDeUsuarioEnUsoException e1) {
 				JOptionPane.showConfirmDialog(null, "Ya existe un usuario con ese nombre.", "",
 						JOptionPane.DEFAULT_OPTION);
 			}
 
-			try {
-				Sistema.getInstancia().usrLogin(((Registro) vista).getNombreUsuario(), ((Registro) vista).getPass());
-			} catch (UsuarioInexistenteException e1) {
-			} catch (ContraseniaIncorrectaException e1) {
-			}
 
-			Sistema.getInstancia().usrActualizarDatos(((Registro) vista).getNombre(), ((Registro) vista).getApellido(),
-					((Registro) vista).getTelefono(), ((Registro) vista).getEdad());
-
-			JOptionPane.showConfirmDialog(null, "registro exitoso", "", JOptionPane.DEFAULT_OPTION);
-
-			vista.visible(false);
-			vista = new VentanaEmpleadoPretenso();
-			vista.setActionListener(this);
-			vista.setWindowListener(this);
 
 		} else if (e.getActionCommand().equals("Registrar empleador")) {
 
 			try {
 				Sistema.getInstancia().usrRegistrarUsuario(TipoUsuario.EMPLEADOR,
 						((Registro) vista).getNombreUsuarioE(), ((Registro) vista).getPassE());
+				
+				
+				
+				try {
+					Sistema.getInstancia().usrLogin(((Registro) vista).getNombreUsuarioE(), ((Registro) vista).getPassE());
+				} catch (UsuarioInexistenteException e1) {
+				} catch (ContraseniaIncorrectaException e1) {
+				}
+
+				Sistema.getInstancia().usrActualizarDatos(((Registro) vista).getNombreE(),
+						((Registro) vista).getTipoPersona(), ((Registro) vista).getRubro());
+				JOptionPane.showConfirmDialog(null, "registro exitoso", "", JOptionPane.DEFAULT_OPTION);
+
+				vista.visible(false);
+				vista = new VentanaEmpleador();
+				vista.setActionListener(this);
+				vista.setWindowListener(this);
+				
+				
 			} catch (NombreDeUsuarioEnUsoException e1) {
 				JOptionPane.showConfirmDialog(null, "Ya existe un usuario con ese nombre.", "",
 						JOptionPane.DEFAULT_OPTION);
 			}
 
-			try {
-				Sistema.getInstancia().usrLogin(((Registro) vista).getNombreUsuarioE(), ((Registro) vista).getPassE());
-			} catch (UsuarioInexistenteException e1) {
-			} catch (ContraseniaIncorrectaException e1) {
-			}
-
-			Sistema.getInstancia().usrActualizarDatos(((Registro) vista).getNombreE(),
-					((Registro) vista).getTipoPersona(), ((Registro) vista).getRubro());
-			JOptionPane.showConfirmDialog(null, "registro exitoso", "", JOptionPane.DEFAULT_OPTION);
-
-			vista.visible(false);
-			vista = new VentanaEmpleador();
-			vista.setActionListener(this);
-			vista.setWindowListener(this);
 
 		} else if (e.getActionCommand().equals("Crear Ticket")) {
 			Sistema.getInstancia()
@@ -250,8 +262,18 @@ public class Controlador implements ActionListener, WindowListener {
 			} catch (UsuarioInexistenteException e1) {
 				e1.printStackTrace();
 			}
+		   }else if (e.getActionCommand().equals(" Actualizar  ")) {
+			   ((VentanaEmpleador) vista).agregarTicket(Sistema.getInstancia().usrGetTickets());
+			   
+		   }else if (e.getActionCommand().equals("  Actualizar ")) {
+			   ((VentanaEmpleadoPretenso) vista).agregarTicket(Sistema.getInstancia().usrGetTickets());
+			   
+		   }else if (e.getActionCommand().equals("Ver Detalles")) {
+			   ((VentanaEmpleador) vista).actualizaFormu(((VentanaEmpleador) vista).SeleccionCont().getTicketEmpleado().getFormulario());
+		   }else if (e.getActionCommand().equals("Ver Detalles ")) {
+			   ((VentanaEmpleadoPretenso) vista).actualizaFormu(((VentanaEmpleadoPretenso) vista).SeleccionCont().getTicketEmpleador().getFormulario());
 		   }
-	}
+	} 
 
 	@Override
 	public void windowOpened(WindowEvent e) {

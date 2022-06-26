@@ -147,12 +147,13 @@ public class VentanaAgencia extends JFrame implements IVista, KeyListener {
 		this.panel_panelC.add(this.lblUsuariosACobrar_2);
 		
 		this.btnNewButton_2 = new JButton("Actualizar Contratos ");
-		this.btnNewButton_2.setBounds(455, 463, 133, 23);
+		this.btnNewButton_2.setBounds(431, 463, 157, 23);
 		this.panel_panelC.add(this.btnNewButton_2);
 		
 		this.btnNewButton = new JButton("Ver Comision");
 		this.btnNewButton.setBounds(225, 183, 123, 31);
 		this.panel_panelC.add(this.btnNewButton);
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setResizable(false);
 
@@ -183,11 +184,11 @@ public class VentanaAgencia extends JFrame implements IVista, KeyListener {
 		this.scrollPane_5.setViewportView(this.listSolicitudes);
 		
 		this.btnNewButton_1 = new JButton("Buscar Nuevos");
-		this.btnNewButton_1.setBounds(154, 252, 103, 23);
+		this.btnNewButton_1.setBounds(124, 252, 133, 23);
 		this.panelEmpleadores.add(this.btnNewButton_1);
 		
 		this.btnNewButton_3 = new JButton("Ver Solicitudes");
-		this.btnNewButton_3.setBounds(302, 252, 103, 23);
+		this.btnNewButton_3.setBounds(302, 252, 139, 23);
 		this.panelEmpleadores.add(this.btnNewButton_3);
 		
 		this.panelEmpleadosP = new JPanel();
@@ -214,11 +215,11 @@ public class VentanaAgencia extends JFrame implements IVista, KeyListener {
 		this.scrollPane_7.setViewportView(this.listSolicitudesE);
 		
 		this.btnBuscar = new JButton("Buscar  Nuevos");
-		this.btnBuscar.setBounds(154, 252, 107, 23);
+		this.btnBuscar.setBounds(125, 252, 136, 23);
 		this.panelEmpleadosP.add(this.btnBuscar);
 		
 		this.btnSol = new JButton("Ver  Solicitudes");
-		this.btnSol.setBounds(302, 252, 107, 23);
+		this.btnSol.setBounds(302, 252, 128, 23);
 		this.panelEmpleadosP.add(this.btnSol);
 		
 		this.btnActivarEL.addKeyListener(this);

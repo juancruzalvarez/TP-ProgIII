@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import sistema.asignaciones.TicketPuntaje;
 import sistema.contratos.Contrato;
 import sistema.tickets.EstadoTicket;
+import sistema.tickets.Formulario;
 import sistema.tickets.Ticket;
 
 public class VentanaEmpleadoPretenso extends JFrame implements IVista,KeyListener, ActionListener {
@@ -79,6 +80,9 @@ public class VentanaEmpleadoPretenso extends JFrame implements IVista,KeyListene
 	private JList<Contrato> listSolicitudes;
 	private JButton btnActualizarSolicitudes;
 	private DefaultListModel<Contrato> modeloListaCont;
+	private JButton btnNewButton;
+	private JList<Formulario> listDetallesE;
+	private DefaultListModel<Formulario> modeloListaFormu;
 
 	/**
 	 * Launch the application.
@@ -209,7 +213,7 @@ public class VentanaEmpleadoPretenso extends JFrame implements IVista,KeyListene
 		comboBoxEstudios.addItem("terciario");
 
 		this.btnCrearTicket = new JButton("Crear Ticket E.");
-		this.btnCrearTicket.setBounds(446, 223, 107, 23);
+		this.btnCrearTicket.setBounds(433, 223, 120, 23);
 		this.panel_2.add(this.btnCrearTicket);
 
 		this.panel_3 = new JPanel();
@@ -242,6 +246,7 @@ public class VentanaEmpleadoPretenso extends JFrame implements IVista,KeyListene
 		this.btnEliminar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		this.btnEliminar.setBounds(354, 181, 106, 23);
 		this.panel_3.add(this.btnEliminar);
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setResizable(false);
 		
@@ -318,7 +323,7 @@ public class VentanaEmpleadoPretenso extends JFrame implements IVista,KeyListene
 		this.listSolicitudes = new JList<Contrato>();
 		this.scrollPane_2.setViewportView(this.listSolicitudes);
 		
-		this.btnNewButton_3 = new JButton("Ver Detalles");
+		this.btnNewButton_3 = new JButton("Ver Detalles ");
 		this.btnNewButton_3.setBounds(250, 267, 107, 23);
 		this.panel_resultados.add(this.btnNewButton_3);
 		
@@ -326,12 +331,19 @@ public class VentanaEmpleadoPretenso extends JFrame implements IVista,KeyListene
 		this.scrollPane_3.setBounds(10, 307, 578, 134);
 		this.panel_resultados.add(this.scrollPane_3);
 		
+		this.listDetallesE = new JList<Formulario>();
+		this.scrollPane_3.setViewportView(this.listDetallesE);
+		
 		this.btnActualizarSolicitudes = new JButton("Actualizar Solicitudes");
-		this.btnActualizarSolicitudes.setBounds(10, 267, 137, 23);
+		this.btnActualizarSolicitudes.setBounds(10, 267, 164, 23);
 		this.panel_resultados.add(this.btnActualizarSolicitudes);
 		
 		this.modeloListaE=new DefaultListModel<Ticket>();
 		this.listTicketsE.setModel(modeloListaE);
+		
+		this.btnNewButton = new JButton("  Actualizar ");
+		this.btnNewButton.setBounds(487, 182, 101, 23);
+		this.panel_3.add(this.btnNewButton);
 		
 		this.modeloListaTicketsA=new DefaultListModel<Ticket>();
 		this.listTicketsA.setModel(modeloListaTicketsA);
@@ -341,7 +353,22 @@ public class VentanaEmpleadoPretenso extends JFrame implements IVista,KeyListene
 		
 		this.modeloListaCont=new DefaultListModel<Contrato>();
 		this.listSolicitudes.setModel(modeloListaCont);
+		
+		this.modeloListaFormu=new DefaultListModel<Formulario>();
+		this.listDetallesE.setModel(modeloListaFormu);
 	}
+	
+	
+	public Contrato SeleccionCont() {
+		return this.listSolicitudes.getSelectedValue();
+	}
+	
+	public void actualizaFormu(Formulario formu) {
+			this.modeloListaFormu.clear();
+			this.modeloListaFormu.addElement(formu);
+
+		}
+	
 	public void actualizaContratos(List<Contrato> contratos,String username) {
 		Contrato aux=null;
 		this.modeloListaCont.clear();
@@ -400,6 +427,7 @@ public class VentanaEmpleadoPretenso extends JFrame implements IVista,KeyListene
 		this.btnNewButton_3.addActionListener(actionListener);
 		this.btnNewButton_1.addActionListener(actionListener);
 		this.btnActualizarSolicitudes.addActionListener(actionListener);
+		this.btnNewButton.addActionListener(actionListener);
 	}
 
 	@Override

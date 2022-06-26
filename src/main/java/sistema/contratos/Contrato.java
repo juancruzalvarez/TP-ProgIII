@@ -23,9 +23,9 @@ public class Contrato implements Serializable {
 
     @Override
     public String toString() {
-        return "Contrato{" +
-                "ticketEmpleado=" + ticketEmpleado +
-                ", ticketEmpleador=" + ticketEmpleador +
+        return "Contrato {" +
+                "T icket Empleado=" + ticketEmpleado +
+                ", Ticket Empleador=" + ticketEmpleador +
                 '}';
     }
 }

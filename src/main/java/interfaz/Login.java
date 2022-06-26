@@ -89,6 +89,7 @@ public class Login extends JFrame implements IVista, KeyListener{
 		this.textFieldUsuario.addKeyListener(this);
 		
 		this.btnLogin.setEnabled(false);
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setResizable(false);
 	}

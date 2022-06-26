@@ -33,9 +33,10 @@ public class Empleador extends Usuario implements Serializable {
     @Override
     public String toString() {
         return  "Usuario: " + nombreDeUsuario + '\n' +
-                (nombre != null ? "Nombre: " + nombre + '\n' : "") +
-                (tipoEmpleador   != null ? "Tipo: "   + tipoEmpleador   + '\n' : "") +
-                (rubro  != null ? "Rubro: "  + rubro  + '\n' : "");
+                (nombre != null ? " Nombre: " + nombre + '\n' : "") +
+                (tipoEmpleador   != null ? " Tipo: "   + tipoEmpleador   + '\n' : "") +
+                (rubro  != null ? " Rubro: "  + rubro  + '\n' : "")+
+                " Puntaje: "+super.getPuntaje();
     }
 
     @Override

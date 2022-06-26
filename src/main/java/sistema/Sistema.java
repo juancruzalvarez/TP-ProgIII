@@ -198,10 +198,15 @@ public class Sistema {
         case "Gerencial":comisionempleado=1;break;
         }
         comisionempleado-=usrempleado.getPuntaje()/100;
+        
+        if(comisionempleado<0)
+        	comisionempleado=0;
+        if(comisionempleador<0)
+        	comisionempleador=0;
 
-        return ("La comsion que se le cobrara al empleador "+ usrempleador.getNombre() +" es de: "+comisionempleador*100+"% del sueldo\n"
-        		+ " pretendido, por contratar al empleado "
-                + usrempleado.getNombre()+ ", al cual se le cobrara una comsion de "+comisionempleado*100+"% del sueldo pretendido.\n");
+        return ("La comsion que se le cobrara al empleado "+ usrempleado.getNombre() +" es de: "+comisionempleado*100+"% del sueldo\n"
+        		+ " pretendido, por ser contratado por el Empleador "
+                + usrempleador.getNombre()+ ", al cual se le cobrara una comsion de "+comisionempleador*100+"% del sueldo pretendido.\n");
     }
 
     public List<Contrato> agGetContratos(){

@@ -242,7 +242,7 @@ public class Registro extends JFrame implements IVista, KeyListener {
 		comboBoxRubro.addItem("Salud");
 		comboBoxRubro.addItem("Comercio local");
 		comboBoxRubro.addItem("Comercio internacional");
-		
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setResizable(false);
 		
@@ -254,6 +254,7 @@ public class Registro extends JFrame implements IVista, KeyListener {
 		this.textFieldyear.addKeyListener(this);
 		this.textFieldPassword.addKeyListener(this);
 		this.btnRegistrarEmpleadoPretenso.setEnabled(false);
+		this.btnRegistrarEmpleador.setEnabled(false);
 		
 		this.textFieldNombreE.addKeyListener(this);
 		this.textFieldUserE.addKeyListener(this);
@@ -362,12 +363,23 @@ public class Registro extends JFrame implements IVista, KeyListener {
 		String nombre=this.getNombre();
 		String apellido=this.getApellido();
 		String tel=this.getTelefono();
-		int dia=Integer.parseInt(this.textField_dia.getText()),mes=Integer.parseInt(this.textFieldmes.getText()),year=Integer.parseInt(this.textFieldyear.getText());
+
+		String dia=this.textField_dia.getText();
+		String mes=this.textFieldmes.getText();
+		String year=this.textFieldyear.getText();
+		
+		String usernameE = this.getNombreUsuarioE();
+		String passwordE = this.getPassE();
+		String nombreE=this.getNombreE();
 		
 		
 		boolean cond = (!username.isEmpty() && !password.isEmpty() && !nombre.isEmpty() && !apellido.isEmpty() && (Pattern.matches("[a-zA-Z]+", tel) == false
-				&& tel.length() >= 4) && dia>=1&&dia<=30 && mes<=12&&mes>=1 &&year>=1922&&year<=2004);
+				&& tel.length() >= 4) && dia.matches("[+-]?\\d*(\\.\\d+)?") && mes.matches("[+-]?\\d*(\\.\\d+)?") && year.matches("[+-]?\\d*(\\.\\d+)?"));
 		this.btnRegistrarEmpleadoPretenso.setEnabled(cond);
+		
+		boolean condE = (!usernameE.isEmpty() && !passwordE.isEmpty() && !nombreE.isEmpty());
+		this.btnRegistrarEmpleador.setEnabled(condE);
+				
 		
 	}
 }

@@ -66,6 +66,14 @@ public class Formulario implements Serializable {
 	public String getPuesto() {
     	return this.puestoLaboral;
     }
+
+
+	@Override
+	public String toString() {
+		return " [locacion:" + locacion + ", remuneracion:" + remuneracion + ", cargaHoraria:" + cargaHoraria
+				+ ", puestoLaboral:" + puestoLaboral + ", rangoEtario:" + rangoEtario + ", expPrevia:" + expPrevia
+				+ ", estudios:" + estudios + "]";
+	}
 	
 
 

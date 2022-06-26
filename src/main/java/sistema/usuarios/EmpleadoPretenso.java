@@ -74,10 +74,11 @@ public class EmpleadoPretenso extends Usuario implements Serializable {
     @Override
     public String toString() {
         return  "Usuario: " + nombreDeUsuario + '\n' +
-                (nombre        != null ? "Nombre: "             + nombre        + '\n' : "") +
-                (apellido      != null ? "Apellido: "           + apellido      + '\n' : "") +
-                (nroDeTelefono != null ? "Numero de Telefono: " + nroDeTelefono + '\n' : "") +
-                (getEdad()     >= 0    ? "Edad: "               + getEdad()     + '\n' : "");
+                (nombre        != null ? " Nombre: "             + nombre        + '\n' : "") +
+                (apellido      != null ? " Apellido: "           + apellido      + '\n' : "") +
+                (nroDeTelefono != null ? " Numero de Telefono: " + nroDeTelefono + '\n' : "") +
+                (getEdad()     >= 0    ? " Edad: "               + getEdad()     + '\n' : "")+
+                " Puntaje: "+super.getPuntaje();
     }
 
     @Override
