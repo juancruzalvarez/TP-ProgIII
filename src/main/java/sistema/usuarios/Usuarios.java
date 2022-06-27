@@ -23,8 +23,8 @@ public class Usuarios {
     
    public Usuarios(){
 	   
-	   nombreAdmin = "XIMENA";
-		passAdmin = "1234";
+	   nombreAdmin = "admin";
+		passAdmin = "admin";
 	   
       usuarioActivo = null;
       empleadores = new HashMap<>();

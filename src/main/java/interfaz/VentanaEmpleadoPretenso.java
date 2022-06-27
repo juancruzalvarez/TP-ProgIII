@@ -104,6 +104,7 @@ public class VentanaEmpleadoPretenso extends JFrame implements IVista,KeyListene
 	 * Create the frame.
 	 */
 	public VentanaEmpleadoPretenso() {
+		setTitle("Empleado Pretenso");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 620, 560);
 		this.contentPane = new JPanel();

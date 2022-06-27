@@ -120,6 +120,7 @@ public class VentanaEmpleador extends JFrame implements IVista,KeyListener, Acti
 	 * Create the frame.
 	 */
 	public VentanaEmpleador() {
+		setTitle("Empleador");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 620, 560);
 		this.contentPane = new JPanel();

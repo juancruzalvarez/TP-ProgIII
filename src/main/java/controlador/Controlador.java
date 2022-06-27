@@ -234,7 +234,7 @@ public class Controlador implements ActionListener, WindowListener {
 					JOptionPane.showConfirmDialog(null, e1.getMessage(), "", JOptionPane.DEFAULT_OPTION);
 				}
 			   
-		   }else if (e.getActionCommand().equals("Actualizar Contratos")) {
+		   }else if (e.getActionCommand().equals("Actualizar Contratos")) { 
 			   ((VentanaEmpleador) vista).actualizaContratos(Sistema.getInstancia().agGetContratos(), Sistema.getInstancia().agGetUsernameActivo());
 			   
 		   }else if (e.getActionCommand().equals("Actualizar Solicitudes")) {
