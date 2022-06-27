@@ -84,6 +84,7 @@ public class VentanaAgencia extends JFrame implements IVista, KeyListener {
 	 * Create the frame.
 	 */
 	public VentanaAgencia() {
+		setTitle("Administrador");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 620, 560);
 		this.contentPane = new JPanel();
