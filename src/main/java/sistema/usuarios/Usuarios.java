@@ -23,7 +23,7 @@ public class Usuarios {
     
    public Usuarios(){
 	   
-	   nombreAdmin = "admin";
+	   nombreAdmin = "admin";//
 		passAdmin = "admin";
 	   
       usuarioActivo = null;
