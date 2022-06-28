@@ -374,7 +374,7 @@ public class Registro extends JFrame implements IVista, KeyListener {
 		
 		
 		boolean cond = (!username.isEmpty() && !password.isEmpty() && !nombre.isEmpty() && !apellido.isEmpty() && (Pattern.matches("[a-zA-Z]+", tel) == false
-				&& tel.length() >= 4) && dia.matches("[+-]?\\d*(\\.\\d+)?") && mes.matches("[+-]?\\d*(\\.\\d+)?") && year.matches("[+-]?\\d*(\\.\\d+)?"));
+				&& tel.length() >= 4) && dia.matches("[+-]?\\d*(\\.\\d+)?") && !dia.isEmpty() && mes.matches("[+-]?\\d*(\\.\\d+)?") && !mes.isEmpty()&& year.matches("[+-]?\\d*(\\.\\d+)?"))&& !year.isEmpty();
 		this.btnRegistrarEmpleadoPretenso.setEnabled(cond);
 		
 		boolean condE = (!usernameE.isEmpty() && !passwordE.isEmpty() && !nombreE.isEmpty());

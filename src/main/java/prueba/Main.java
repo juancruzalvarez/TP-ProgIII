@@ -10,7 +10,6 @@ import exepciones.NombreDeUsuarioEnUsoException;
 import exepciones.TicketNoActivoException;
 import exepciones.UsuarioInexistenteException;
 import sistema.Sistema;
-import sistema.asignaciones.Asignaciones;
 import sistema.asignaciones.TicketPuntaje;
 import sistema.tickets.Formulario;
 import sistema.tickets.FormularioEmpleador;
@@ -109,15 +108,17 @@ public class Main {
         System.out.println("DESPUES DE PERSISTIR:");
         Sistema.getInstancia().agGetUsuarios().forEach( u -> System.out.println("Usuario: "+u.getNombreDeUsuario()+ " Puntaje: "+u.getPuntaje()));
 
-        System.out.println("SIMULACION:");
-        System.out.println("Inicio de simulacion:");
-        Sistema.getInstancia().agComenzarSimulacion();
-        try {
-            Thread.sleep(20000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        Sistema.getInstancia().agFinalizarSimulacion();
+//        System.out.println("SIMULACION:");
+//        System.out.println("Inicio de simulacion:");
+//        Sistema.getInstancia().agComenzarSimulacion();
+//        try {
+//           Thread.sleep(20000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        Sistema.getInstancia().agFinalizarSimulacion();
+        
+        
     }
 
     private static void pRegistrarUsuario(TipoUsuario tipo, String nombreDeUsuario, String constrasenia){

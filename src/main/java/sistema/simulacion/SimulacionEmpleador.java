@@ -1,17 +1,18 @@
 package sistema.simulacion;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import controlador.Controlador;
 import sistema.Sistema;
 import sistema.tickets.Formulario;
 import sistema.tickets.TicketSimplificado;
-
-import java.text.Normalizer;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class SimulacionEmpleador implements Runnable{
 
     private String nombreDeUsuario;
     private ArrayList<String> empleadosAceptados;
+    private Controlador controladorsim;
 
     public String getNombreDeUsuario() {
         return nombreDeUsuario;
@@ -37,9 +38,10 @@ public class SimulacionEmpleador implements Runnable{
         }
     }
 
-    public SimulacionEmpleador(String nombreDeUsuario) {
+    public SimulacionEmpleador(String nombreDeUsuario,Controlador cs) {
         this.nombreDeUsuario = nombreDeUsuario;
         this.empleadosAceptados = new ArrayList<>();
+        this.controladorsim=cs;
     }
 
     public void generarEmpleos(){
@@ -53,14 +55,15 @@ public class SimulacionEmpleador implements Runnable{
             int puestoI = r.nextInt(Formulario.puestos.size());
 
             t = new TicketSimplificado(Formulario.puestos.get(puestoI), Formulario.locaciones.get(locacionI), this);
-            sis.agSimulAgregarEmpleo(t);
+            sis.agSimulAgregarEmpleo(t,controladorsim);
         }
+        this.controladorsim.mostrarNuevoEvento("El empleador " + this.nombreDeUsuario + " agrego empleos a la bolsa ");
     }
 
     public synchronized boolean propuestaEmpleado(String usuario, TicketSimplificado ticket, String locacionDeseada){
         if(ticket.getLocacion().equals(locacionDeseada) || ticket.getLocacion().equals("Indistinto") || locacionDeseada.equals("Indistinto")){
             empleadosAceptados.add(usuario);
-            System.out.println("El empleador " + this.nombreDeUsuario + " acepto como empleado a " + usuario);
+            this.controladorsim.mostrarNuevoEvento("El empleador " + this.nombreDeUsuario + " acepto como empleado a " + usuario);
             return true;
         }
         return false;
