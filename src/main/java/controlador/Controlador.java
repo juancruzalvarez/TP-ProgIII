@@ -17,6 +17,7 @@ import interfaz.Registro;
 import interfaz.VentanaAgencia;
 import interfaz.VentanaEmpleadoPretenso;
 import interfaz.VentanaEmpleador;
+import interfaz.VentanaSimulacion;
 import sistema.Sistema;
 import sistema.tickets.Formulario;
 import sistema.tickets.FormularioEmpleador;
@@ -272,8 +273,27 @@ public class Controlador implements ActionListener, WindowListener {
 			   ((VentanaEmpleador) vista).actualizaFormu(((VentanaEmpleador) vista).SeleccionCont().getTicketEmpleado().getFormulario());
 		   }else if (e.getActionCommand().equals("Ver Detalles ")) {
 			   ((VentanaEmpleadoPretenso) vista).actualizaFormu(((VentanaEmpleadoPretenso) vista).SeleccionCont().getTicketEmpleador().getFormulario());
-		   }
-	} 
+		   }else if (e.getActionCommand().equals("Simulacion")) {
+			   vista.visible(false);
+			   vista = new VentanaSimulacion();
+				vista.setActionListener(this);
+				vista.setWindowListener(this);
+		   }else if (e.getActionCommand().equals("Iniciar Simulacion")) {
+				Sistema.getInstancia().agComenzarSimulacion(this);
+				((VentanaSimulacion) vista).actualizarStart(Sistema.getInstancia().agThreadSize());
+
+				
+			} else if (e.getActionCommand().equals("Finalizar Simulacion")) {
+				Sistema.getInstancia().agFinalizarSimulacion();
+				((VentanaSimulacion) vista).actualizarStop();
+				
+
+			} 
+		} 
+		
+		public void mostrarNuevoEvento(String evento) {
+			((VentanaSimulacion) vista).actualizarDetalles(evento);
+		}
 
 	@Override
 	public void windowOpened(WindowEvent e) {

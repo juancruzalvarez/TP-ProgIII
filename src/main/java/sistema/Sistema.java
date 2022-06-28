@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Stream;
 
+import controlador.Controlador;
 import exepciones.ContraseniaIncorrectaException;
 import exepciones.NombreDeUsuarioEnUsoException;
 import exepciones.TicketNoActivoException;
@@ -83,7 +84,7 @@ public class Sistema {
         }
     }
 
-    public void agComenzarSimulacion(){
+    public void agComenzarSimulacion(Controlador cs){
         bolsaDeTrabajo.clear();
         Random r = new Random();
         List<SimulacionEmpleador> empleadoresSimulados =
@@ -91,7 +92,7 @@ public class Sistema {
                         .values()
                         .stream()
                         .map(u ->{
-                            return new SimulacionEmpleador(u.getNombreDeUsuario());
+                            return new SimulacionEmpleador(u.getNombreDeUsuario(),cs);
                         }
                         ).toList();
 
@@ -104,24 +105,27 @@ public class Sistema {
                                 u.getNombreDeUsuario(),
                                 Formulario.locaciones.get(r.nextInt(Formulario.locaciones.size())),
                                 Formulario.puestos.get(r.nextInt(Formulario.puestos.size()))
-                            );
+                            ,cs);
                         }
                         ).toList();
         threadsSimulacion.addAll(empleadosSimulados.stream().map(e -> new Thread(e)).toList());
         threadsSimulacion.addAll(empleadoresSimulados.stream().map(e -> new Thread(e)).toList());
         threadsSimulacion.forEach(t -> t.start());
-        System.out.println("Simulacion comenzada:" + threadsSimulacion.size());
+    }
+    public int agThreadSize() {
+    	return this.threadsSimulacion.size();
     }
 
-    public void agSimulAgregarEmpleo(TicketSimplificado ticket){
+    public void agSimulAgregarEmpleo(TicketSimplificado ticket,Controlador cs){
 
         synchronized(bolsaDeTrabajo) {
             bolsaDeTrabajo.add(ticket);
             bolsaDeTrabajo.notifyAll();
+            
         }
     }
 
-    public void agSimulBuscarEmpleo(String usuario, String locacionDeseada, String puestoDeseado){
+    public void agSimulBuscarEmpleo(String usuario, String locacionDeseada, String puestoDeseado,Controlador cs){
         synchronized(bolsaDeTrabajo) {
             int cantEmpleos = bolsaDeTrabajo.size();
             boolean encontrado = false;
@@ -133,7 +137,7 @@ public class Sistema {
                     if(t.getEmpleador().propuestaEmpleado(usuario, t, locacionDeseada)){
                         bolsaDeTrabajo.remove(t);
                         encontrado = true;
-                        System.out.println("Usuario "+usuario+"encontro empleo. Empleador:" +t.getEmpleador().getNombreDeUsuario());
+                        cs.mostrarNuevoEvento("Usuario "+usuario+" encontro empleo. Empleador: " +t.getEmpleador().getNombreDeUsuario());
                     }
                 }
                 while (cantEmpleos == bolsaDeTrabajo.size()) {
@@ -144,7 +148,7 @@ public class Sistema {
                     }
                 }
             }
-            System.out.println("El usuario "+ usuario + "abandono la busqueda de empleo.");
+            cs.mostrarNuevoEvento("El usuario "+ usuario + " abandono la busqueda de empleo.");
         }
     }
 

@@ -63,6 +63,7 @@ public class VentanaAgencia extends JFrame implements IVista, KeyListener {
 	private DefaultListModel<Usuario> modeloListaEmpleadosE;
 	private JList<Ticket> listSolicitudesE;
 	private DefaultListModel<Ticket> modeloListaSoliE;
+	private JButton btnsimu;
 
 	/**
 	 * Launch the application.
@@ -232,6 +233,10 @@ public class VentanaAgencia extends JFrame implements IVista, KeyListener {
 		this.modeloListaDetalles = new DefaultListModel<String>();
 		this.listDetalles.setModel(modeloListaDetalles);
 		
+		this.btnsimu = new JButton("Simulacion");
+		this.btnsimu.setBounds(10, 168, 113, 23);
+		this.panel_panelC.add(this.btnsimu);
+		
 		this.modeloListaEmpleador = new DefaultListModel<Usuario>();
 		this.listEmpleadores.setModel(modeloListaEmpleador);
 		
@@ -315,6 +320,7 @@ public class VentanaAgencia extends JFrame implements IVista, KeyListener {
 		this.btnSol.addActionListener(actionListener);
 		this.btnNewButton_1.addActionListener(actionListener);
 		this.btnNewButton_3.addActionListener(actionListener);
+		this.btnsimu.addActionListener(actionListener);
 	}
 
 	@Override
