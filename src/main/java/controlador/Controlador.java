@@ -28,7 +28,7 @@ public class Controlador implements ActionListener, WindowListener {
 	IVista vista;
 
 	public Controlador() {
-		Sistema.getInstancia();
+		Sistema.getInstancia().read();
 		vista = new Login();
 		vista.setActionListener(this);
 		vista.setWindowListener(this);
@@ -307,6 +307,7 @@ public class Controlador implements ActionListener, WindowListener {
 
 	@Override
 	public void windowClosed(WindowEvent e) {
+		Sistema.getInstancia().write();
 		vista = new Login();
 		vista.setActionListener(this);
 		vista.setWindowListener(this);
